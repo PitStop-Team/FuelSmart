@@ -30,6 +30,8 @@ import com.example.findcheapgas.model.StationError;
 import com.example.findcheapgas.model.StationQuery;
 import com.example.findcheapgas.model.StationSaving;
 import com.example.findcheapgas.navigation.RoadDistanceResolver;
+import com.example.findcheapgas.pleos.PleosVehicleSession;
+import com.example.findcheapgas.vehicle.CarInfoResolver;
 import com.example.findcheapgas.navigation.RouteDistanceProvider;
 import com.example.findcheapgas.navigation.UserInputRouteDistanceProvider;
 import com.example.findcheapgas.model.StationSearchResult;
@@ -69,6 +71,9 @@ public class MapViewModel extends AndroidViewModel {
     private final CarInfoRepository carInfoRepository;
     // 내 차 정보가 바뀌면 받아 둔 목록으로 다시 계산한다. ViewModel이 없어질 때 해제한다.
     private final Observer<CarInfo> carInfoObserver = carInfo -> updateDisplayedStations();
+    // 차량에서 연비를 새로 받으면 목록을 다시 계산한다.
+    private final Observer<Long> vehicleObserver = version -> updateDisplayedStations();
+    private final PleosVehicleSession vehicleSession;
     // 내 브랜드 설정(할인, 선호, 숨기기)이 바뀌어도 같은 방식으로 다시 계산한다.
     private final BrandSettingsRepository brandSettingsRepository;
     private final Observer<BrandSettings> brandSettingsObserver = settings -> updateDisplayedStations();
@@ -152,8 +157,25 @@ public class MapViewModel extends AndroidViewModel {
         brandFilter.setValue(filterPreferences.getBrandFilter());
         carInfoRepository = CarInfoRepository.getInstance(application);
         carInfoRepository.getCarInfo().observeForever(carInfoObserver);
+        vehicleSession = PleosVehicleSession.getInstance(application);
+        vehicleSession.getFuelDataVersion().observeForever(vehicleObserver);
         brandSettingsRepository = BrandSettingsRepository.getInstance(application);
         brandSettingsRepository.getBrandSettings().observeForever(brandSettingsObserver);
+    }
+
+    /** 계산에 실제로 쓰는 내 차 정보: 차량 연비가 있으면 그 값, 없으면 사용자 입력값 */
+    public CarInfo getEffectiveCarInfo() {
+        return CarInfoResolver.resolve(vehicleSession.getDataSource(), carInfoRepository.getCurrent());
+    }
+
+    /** 계산이 차량 연비를 쓰고 있는지 (계산 기준 문구에 밝힌다). */
+    public boolean isUsingVehicleEfficiency() {
+        return !getEffectiveCarInfo().equals(carInfoRepository.getCurrent());
+    }
+
+    /** 차량에서 연료 값을 새로 받을 때마다 바뀐다. */
+    public LiveData<Long> getVehicleDataVersion() {
+        return vehicleSession.getFuelDataVersion();
     }
 
     public LiveData<UserLocation> getLocation() {
@@ -618,7 +640,7 @@ public class MapViewModel extends AndroidViewModel {
         }
         BrandSettings brandSettings = brandSettingsRepository.getCurrent();
         List<StationSaving> result = StationListBuilder.build(fetchedStations, radius.getValue(),
-                sortOrder.getValue(), carInfoRepository.getCurrent(), brandSettings, brandFilter.getValue(),
+                sortOrder.getValue(), getEffectiveCarInfo(), brandSettings, brandFilter.getValue(),
                 roadDistances(fetchedOrigin));
         if (selectId != null && containsStation(result, selectId)) {
             selectedStationId.setValue(selectId);
@@ -648,6 +670,7 @@ public class MapViewModel extends AndroidViewModel {
     protected void onCleared() {
         super.onCleared();
         carInfoRepository.getCarInfo().removeObserver(carInfoObserver);
+        vehicleSession.getFuelDataVersion().removeObserver(vehicleObserver);
         brandSettingsRepository.getBrandSettings().removeObserver(brandSettingsObserver);
         stationRepository.shutdown();
         regionNameRepository.shutdown();

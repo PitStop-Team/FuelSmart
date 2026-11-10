@@ -20,6 +20,8 @@ import com.example.findcheapgas.model.FavoritePrice;
 import com.example.findcheapgas.model.FavoriteStation;
 import com.example.findcheapgas.model.FuelType;
 import com.example.findcheapgas.navigation.RoadDistanceResolver;
+import com.example.findcheapgas.pleos.PleosVehicleSession;
+import com.example.findcheapgas.vehicle.CarInfoResolver;
 import com.example.findcheapgas.navigation.UserInputRouteDistanceProvider;
 import com.example.findcheapgas.util.FavoriteListBuilder;
 
@@ -43,6 +45,7 @@ public class FavoriteViewModel extends AndroidViewModel {
     private final FavoriteRepository favoriteRepository;
     private final StationDetailRepository detailRepository;
     private final CarInfoRepository carInfoRepository;
+    private final PleosVehicleSession vehicleSession;
     private final BrandSettingsRepository brandSettingsRepository;
 
     private final MediatorLiveData<List<FavoriteItem>> items = new MediatorLiveData<>();
@@ -78,6 +81,8 @@ public class FavoriteViewModel extends AndroidViewModel {
             }
         });
         items.addSource(carInfoRepository.getCarInfo(), carInfo -> rebuild());
+        vehicleSession = PleosVehicleSession.getInstance(application);
+        items.addSource(vehicleSession.getFuelDataVersion(), version -> rebuild());
         items.addSource(brandSettingsRepository.getBrandSettings(), settings -> rebuild());
     }
 
@@ -200,7 +205,8 @@ public class FavoriteViewModel extends AndroidViewModel {
         }
         Map<String, FavoritePrice> current = getFuelType() == pricesFuelType ? prices : Collections.emptyMap();
         items.setValue(FavoriteListBuilder.build(favorites, current, around,
-                carInfoRepository.getCurrent(), brandSettingsRepository.getCurrent(),
+                CarInfoResolver.resolve(vehicleSession.getDataSource(), carInfoRepository.getCurrent()),
+                brandSettingsRepository.getCurrent(),
                 around == null ? RoadDistanceResolver.FIXED_FACTOR
                         : RoadDistanceResolver.withFallback(new UserInputRouteDistanceProvider(),
                                 around.getOrigin().getLatitude(), around.getOrigin().getLongitude())));
