@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    주유소 목록 화면 (지도 없음). 위에서부터 차례로 쌓는다: 진행 막대, 검색창과 필터 줄, 이득 1위 카드, 목록 머리줄, 목록.
+    위치 권한 / 기기 위치 안내는 이득 1위 카드 자리에서 보여준다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!--
-        카카오맵 MapView는 SDK 초기화에 성공했을 때만 코드에서 넣는다.
-        아래 시트를 올린 동안 지도를 누르면 시트만 내리고 지도에는 누름을 넘기지 않는다 (MapTouchGuardLayout).
-    -->
-    <com.example.findcheapgas.ui.map.MapTouchGuardLayout
-        android:id="@+id/map_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- 지도를 쓸 수 없거나 지도 오류가 났을 때 안내 -->
-    <TextView
-        android:id="@+id/map_message"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:attr/colorBackground"
-        android:gravity="center"
-        android:padding="@dimen/space_xxl"
-        android:textAppearance="?attr/textAppearanceBodyLarge"
-        android:visibility="gone" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/location_progress"
@@ -33,18 +18,10 @@
         android:indeterminate="true"
         android:visibility="gone" />
 
-    <!--
-        지도 위쪽 영역. 위에서부터 차례로 쌓여서 서로 겹치지 않는다.
-        - 검색창: [장소 | 주유소 이름] 작은 선택 버튼, 검색어, 검색 버튼 (검색 버튼이나 키보드의 검색 키를 눌렀을 때만 검색)
-        - 필터 줄: 조회 위치 칩(검색한 장소 기준일 때만), 유종("휘발유"), 반경("5km"), 브랜드("브랜드", "브랜드 2", "할인 브랜드")
-        - 이 지역에서 다시 검색 버튼 (가운데)
-        위치 권한 / 기기 위치 안내는 시트의 이득 1위 카드 자리에서 보여준다.
-    -->
     <LinearLayout
         android:id="@+id/map_top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
         android:orientation="vertical"
         android:paddingTop="@dimen/space_s">
 
@@ -162,61 +139,16 @@
                     tools:text="브랜드" />
             </LinearLayout>
         </HorizontalScrollView>
-
-        <!--
-            이 지역에서 다시 검색. 지도 이동이 끝났을 때 지도 중심이 조회 위치에서 고른 반경(최대 3km) 이상 떨어져 있으면 코드에서 보이게 한다.
-            누르면 지도 중심을 조회 위치로 다시 조회하고 숨긴다. 시트를 내린 상태보다 올리면 흐려지다가 숨고, 다시 내리면 돌아온다.
-        -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_research"
-            style="@style/Widget.Material3.Button.ElevatedButton.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/space_s"
-            android:text="@string/research_here"
-            android:visibility="gone"
-            app:icon="@drawable/ic_refresh"
-            tools:visibility="visible" />
     </LinearLayout>
 
-    <!--
-        주변 주유소 시트. 회색 바탕 위에 위에서부터 손잡이, 이득 1위 카드, 목록 머리줄, 목록 카드를 쌓는다.
-        - 접힌 상태(peek)에서는 손잡이와 이득 1위 카드만 보인다. peek 높이와 지도 아래 여백은 코드에서 카드 높이를 재서 맞춘다.
-        - 시트를 올리면 카드는 맨 위에 그대로 있고 그 아래로 목록이 이어진다.
-        - 내림 / 올림 두 단계만 둔다 (fitToContents라 가운데 단계 없음). 시트 높이는 코드에서 화면 높이 - station_sheet_expanded_offset으로
-          맞춰서, 끝까지 올리면 검색창과 필터 줄 아래(가로 화면은 검색창 아래)에서 멈춘다. 손잡이를 누르면 내림 ↔ 올림이 바뀐다.
-        - 가로 화면이나 큰 글꼴처럼 그 높이가 접힌 상태(peek)보다 작으면 카드가 잘리지 않게 코드에서 시트를 peek 이상으로 키운다.
-    -->
+    <!-- 이득 1위 카드. 실제 예상 이득 1위를 보여주고, 목록에서 고른 주유소가 있으면 그 주유소로 바뀐다. -->
     <LinearLayout
-        android:id="@+id/station_sheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bg_station_sheet"
-        android:elevation="@dimen/elevation_sheet"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
-        app:behavior_fitToContents="true"
-        app:behavior_hideable="false"
-        app:behavior_peekHeight="@dimen/station_sheet_peek_height"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        android:paddingTop="@dimen/space_m">
 
-        <!-- 손잡이: 끌어서 올리고 내리거나, 누르면 내림 ↔ 올림. 접근성 설명은 코드에서 "목록 펼치기" / "목록 접기"로 바꾼다. -->
-        <ImageView
-            android:id="@+id/station_sheet_handle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="@string/sheet_handle_expand"
-            android:minHeight="@dimen/drag_handle_min_height"
-            android:paddingTop="@dimen/space_s"
-            android:paddingBottom="@dimen/space_s"
-            android:scaleType="center"
-            android:src="@drawable/bg_sheet_handle" />
-
-        <!--
-            이득 1위 카드. 실제 예상 이득 1위(선호 브랜드 정렬 보너스 없이)를 보여주고, 마커를 누르면 그 주유소로 바뀐다.
-            불러오는 중, 주유소 없음, 오류, 위치 권한 안내도 이 자리에서 한 줄 안내와 버튼으로 보여준다.
-        -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/best_card"
             style="@style/Widget.FindCheapGas.Card.Hero"
@@ -306,21 +238,14 @@
                 app:iconGravity="end"
                 app:iconPadding="0dp"
                 tools:text="예상 이득순" />
-
-            <ImageButton
-                android:id="@+id/btn_legend"
-                android:layout_width="@dimen/touch_target"
-                android:layout_height="@dimen/touch_target"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/map_legend_description"
-                android:src="@drawable/ic_help_outline" />
         </LinearLayout>
 
         <!-- 목록 카드. 시트를 올리면 이득 1위 카드 아래로 이어진다. -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/station_list_card"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginStart="@dimen/space_l"
             android:layout_marginEnd="@dimen/space_l">
 
@@ -334,17 +259,4 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
-    <!-- 목록 시트 위쪽 끝에 붙어서 시트와 함께 움직인다. 시트를 올려 지도 위쪽 필터 줄에 닿으면 코드에서 숨긴다. -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_my_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="@dimen/space_l"
-        android:contentDescription="@string/my_location"
-        app:fabSize="mini"
-        app:layout_anchor="@id/station_sheet"
-        app:layout_anchorGravity="top|end"
-        app:srcCompat="@drawable/ic_my_location" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

@@ -31,13 +31,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        // 카카오맵 SDK는 ARM용 .so만 제공한다. Android Studio Run은 기기 ABI(x86_64 에뮬레이터)만
-        // 패키징하는데, 지정한 ABI 중 맞는 게 없으면 여기 적은 ABI를 모두 넣는다.
-        // 그래서 x86_64 에뮬레이터에서도 ARM .so가 들어가고 ARM 변환으로 실행된다.
-        ndk {
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
-        }
-
         // Room 스키마를 app/schemas/{DB 클래스}/{버전}.json으로 내보낸다. 커밋해 두고 다음 마이그레이션 테스트의 기준으로 쓴다.
         javaCompileOptions {
             annotationProcessorOptions {
@@ -46,7 +39,6 @@ android {
         }
 
         buildConfigField("String", "OPINET_API_KEY", quoted(localProperty("OPINET_API_KEY")))
-        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", quoted(localProperty("KAKAO_NATIVE_APP_KEY")))
         buildConfigField("String", "KAKAO_REST_API_KEY", quoted(localProperty("KAKAO_REST_API_KEY")))
         // "false"라고 적은 경우에만 실제 API를 사용한다.
         val useMockData = !localProperty("USE_MOCK_DATA", "true").equals("false", ignoreCase = true)
@@ -100,7 +92,6 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
-    implementation(libs.kakao.map)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     // 요청 URL에 오피넷 API 키가 들어가므로 HTTP 로깅 인터셉터는 넣지 않는다.

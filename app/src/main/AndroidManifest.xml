@@ -6,12 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!-- 길찾기: Android 11 이상에서 카카오맵, 티맵 설치 여부를 확인하려면 패키지를 선언해야 한다. -->
-    <queries>
-        <package android:name="net.daum.android.map" />
-        <package android:name="com.skt.tmap.ku" />
-    </queries>
-
     <application
         android:name=".FindCheapGasApp"
         android:allowBackup="true"
