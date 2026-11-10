@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FindCheapGas</string>
+    <string name="app_name">가는길 주유</string>
 
     <!-- 하단 탭 -->
     <string name="tab_map">지도</string>

@@ -23,8 +23,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.findcheapgas"
-        minSdk = 24
+        applicationId = "com.pitstop.routefuel"
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
