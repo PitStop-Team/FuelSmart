@@ -24,6 +24,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -43,18 +44,24 @@ import com.example.findcheapgas.model.SortOrder;
 import com.example.findcheapgas.model.StationError;
 import com.example.findcheapgas.model.StationSaving;
 import com.example.findcheapgas.model.UserLocation;
+import com.example.findcheapgas.navigation.NavPoint;
+import com.example.findcheapgas.navigation.WaypointApprovalFlow;
 import com.example.findcheapgas.ui.OriginLabels;
 import com.example.findcheapgas.ui.SavingColors;
 import com.example.findcheapgas.ui.detail.StationDetailActivity;
+import com.example.findcheapgas.pleos.NaviHelperNavigationController;
+import com.example.findcheapgas.pleos.PleosVehicleSession;
 import com.example.findcheapgas.ui.onboarding.OnboardingActivity;
 import com.example.findcheapgas.util.FormatUtil;
 import com.example.findcheapgas.util.PlaceCompareBuilder;
 import com.example.findcheapgas.util.StationListBuilder;
+import com.example.findcheapgas.vehicle.DrivingState;
 import com.example.findcheapgas.viewmodel.MapViewModel;
 import com.example.findcheapgas.viewmodel.SearchViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
@@ -102,6 +109,13 @@ public class MapFragment extends Fragment {
     private MaterialButton sortButton;
 
     private TextView listTitle;
+    // 주행 중에는 검색, 필터, 목록을 숨기고 카드 1장과 큰 버튼만 보여준다.
+    private View topBar;
+    private View listHeader;
+    private View listCard;
+    private View waypointButton;
+    private View drivingButton;
+    private DrivingState drivingState = DrivingState.UNKNOWN;
     private RecyclerView stationList;
     private LinearLayoutManager stationLayoutManager;
     private StationAdapter stationAdapter;
@@ -146,6 +160,7 @@ public class MapFragment extends Fragment {
         setUpBestCard(view);
         setUpSearch(view);
         setUpFilters(view);
+        setUpDrivingLayout(view);
 
         viewModel.getOrigin().observe(getViewLifecycleOwner(), origin -> {
             renderOriginChip(origin);
@@ -188,6 +203,12 @@ public class MapFragment extends Fragment {
         // 내 차 정보 수정 화면에서 저장하고 돌아오면 바로 바뀐다.
         viewModel.getCarInfo().observe(getViewLifecycleOwner(), this::renderCalculationBasis);
 
+        // 차량에서 연비를 받으면 계산 기준 문구도 바꾼다 (계산 자체는 MapViewModel이 다시 한다).
+        viewModel.getVehicleDataVersion().observe(getViewLifecycleOwner(),
+                version -> renderCalculationBasis(viewModel.getCarInfo().getValue()));
+        PleosVehicleSession.getInstance(requireContext()).getDrivingState().observe(getViewLifecycleOwner(),
+                this::applyDrivingState);
+
         viewModel.getStations().observe(getViewLifecycleOwner(), this::showStations);
         viewModel.getStationsLoading().observe(getViewLifecycleOwner(), loading -> {
             renderProgress();
@@ -213,6 +234,7 @@ public class MapFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        renderBestCard(); // 내비게이션 연결 상태가 바뀌었을 수 있다.
         if (viewModel.isPermissionRequested()) {
             if (viewModel.getPermissionState().getValue() != LocationPermissionState.GRANTED) {
                 // 앱 설정 화면에서 권한을 켜고 돌아온 경우
@@ -234,6 +256,11 @@ public class MapFragment extends Fragment {
         stationList = null;
         stationLayoutManager = null;
         stationAdapter = null;
+        topBar = null;
+        listHeader = null;
+        listCard = null;
+        waypointButton = null;
+        drivingButton = null;
         cardStation = null;
         cardStatusAction = null;
     }
@@ -364,11 +391,15 @@ public class MapFragment extends Fragment {
         bestCardStatusText = view.findViewById(R.id.best_card_status_text);
         bestCardStatusButton = view.findViewById(R.id.best_card_status_button);
 
-        // 길찾기 앱 호출은 없앴다. 이 버튼은 NaviHelper 연동 전까지 숨긴다.
-        View routeButton = view.findViewById(R.id.best_card_route);
-        if (routeButton != null) {
-            routeButton.setVisibility(View.GONE);
+        // 경유지 추가 버튼 (정차 중에는 카드 안, 주행 중에는 아래 큰 버튼). 누르면 승인 화면을 연다.
+        waypointButton = view.findViewById(R.id.best_card_route);
+        if (waypointButton instanceof MaterialButton) {
+            ((MaterialButton) waypointButton).setText(R.string.waypoint_action);
+            waypointButton.setContentDescription(getString(R.string.waypoint_action));
         }
+        waypointButton.setOnClickListener(v -> startWaypointApproval());
+        drivingButton = view.findViewById(R.id.driving_action_button);
+        drivingButton.setOnClickListener(v -> startWaypointApproval());
 
         // 카드 본문을 누르면 이 화면에서 계산한 결과와 함께 상세 화면을 연다.
         bestCardContent.setOnClickListener(v -> {
@@ -447,6 +478,7 @@ public class MapFragment extends Fragment {
         bestCardStatusButton.setVisibility(button != 0 ? View.VISIBLE : View.GONE);
         bestCardStatus.setVisibility(View.VISIBLE);
         bestCardContent.setVisibility(View.GONE);
+        updateActionButtons();
     }
 
     private void showCardStation(StationSaving saving) {
@@ -470,6 +502,78 @@ public class MapFragment extends Fragment {
 
         bestCardStatus.setVisibility(View.GONE);
         bestCardContent.setVisibility(View.VISIBLE);
+        updateActionButtons();
+    }
+
+    // ---------- 주행 / 정차 화면, 경유지 승인 ----------
+
+    private void setUpDrivingLayout(View view) {
+        topBar = view.findViewById(R.id.map_top_bar);
+        listHeader = view.findViewById(R.id.station_list_header);
+        listCard = view.findViewById(R.id.station_list_card);
+    }
+
+    /**
+     * 주행 중(DRIVING)에는 카드 1장과 큰 버튼만, 정차(STOPPED)나 차량 데이터 없음(UNKNOWN)에는 목록과 계산 내역까지 보여준다.
+     * 차량 데이터가 없는 폰이나 에뮬레이터에서도 화면을 쓸 수 있게 UNKNOWN은 전체 화면으로 둔다.
+     */
+    private void applyDrivingState(DrivingState state) {
+        if (state == null || topBar == null) {
+            return;
+        }
+        drivingState = state;
+        int detailVisibility = state == DrivingState.DRIVING ? View.GONE : View.VISIBLE;
+        topBar.setVisibility(detailVisibility);
+        listHeader.setVisibility(detailVisibility);
+        listCard.setVisibility(detailVisibility);
+        updateActionButtons();
+    }
+
+    /** 경유지 버튼은 보여줄 주유소가 있고 내비게이션에 연결돼 있을 때만 보인다. */
+    private void updateActionButtons() {
+        if (waypointButton == null || drivingButton == null) {
+            return;
+        }
+        boolean canAct = cardStation != null
+                && NaviHelperNavigationController.getInstance(requireContext()).isConnected();
+        boolean driving = drivingState == DrivingState.DRIVING;
+        waypointButton.setVisibility(canAct && !driving ? View.VISIBLE : View.GONE);
+        drivingButton.setVisibility(canAct && driving ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 경유지 추가 승인 화면. 여기서 "경유지로 추가"를 눌렀을 때만 내비게이션에 요청을 보낸다.
+     * 닫거나 취소하면 아무것도 보내지 않는다.
+     */
+    private void startWaypointApproval() {
+        StationSaving saving = cardStation;
+        if (saving == null) {
+            return;
+        }
+        GasStation station = saving.getStation();
+        WaypointApprovalFlow flow = new WaypointApprovalFlow(NaviHelperNavigationController.getInstance(requireContext()));
+        WaypointApprovalFlow.Proposal proposal = flow.propose(
+                new NavPoint(station.getName(), station.getLatitude(), station.getLongitude()),
+                FormatUtil.formatSavingHeadline(saving));
+
+        View content = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_waypoint_approval, null);
+        ((TextView) content.findViewById(R.id.approval_station)).setText(station.getName());
+        ((TextView) content.findViewById(R.id.approval_summary)).setText(proposal.getSummary());
+        AlertDialog dialog = new MaterialAlertDialogBuilder(requireContext())
+                .setView(content)
+                .setOnCancelListener(d -> flow.reject(proposal))
+                .create();
+        content.findViewById(R.id.approval_confirm).setOnClickListener(v -> {
+            dialog.dismiss();
+            boolean sent = flow.approve(proposal);
+            Toast.makeText(requireContext(), sent ? R.string.waypoint_added : R.string.waypoint_failed,
+                    Toast.LENGTH_LONG).show();
+        });
+        content.findViewById(R.id.approval_cancel).setOnClickListener(v -> {
+            flow.reject(proposal);
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 
     /** "이득 1위 보기": 이득 1위를 선택하고 목록에서 그 줄로 이동한다. */
@@ -706,7 +810,11 @@ public class MapFragment extends Fragment {
 
     /** 이득 1위 카드 맨 아래 계산 기준 문구. 기본값이면 "(기본값)"이 붙는다. */
     private void renderCalculationBasis(CarInfo carInfo) {
-        String basis = FormatUtil.formatCalculationBasis(carInfo);
+        // 계산에 실제로 쓰는 값을 보여준다: 차량 연비가 있으면 그 값(표시에 밝힘), 없으면 입력값/기본값
+        String basis = FormatUtil.formatCalculationBasis(viewModel.getEffectiveCarInfo());
+        if (viewModel.isUsingVehicleEfficiency()) {
+            basis = getString(R.string.basis_vehicle_suffix, basis);
+        }
         basisText.setText(basis);
         basisText.setContentDescription(getString(R.string.station_basis_description, basis));
     }

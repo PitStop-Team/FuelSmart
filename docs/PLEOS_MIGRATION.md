@@ -75,3 +75,14 @@ FindCheapGas(폰 앱)를 Pleos Connect 차량용 앱으로 개조하기 위한 1
 | 6 주행/정차 UI, 음성 | 건너뜀 | docs/pleos/ 없음 ("문서 필요"). Vehicle 정차 판단 API, STT/TTS 모두 "문서에 없음" |
 
 4단계에서 기능 제거와 함께 지운 테스트: 위젯 로직(WidgetContentBuilderTest, WidgetStationLoaderTest), 지도 터치 가드(MapGestureGuardTest), 길찾기 앱 URI(RouteLinksTest).
+
+## 6. Pleos SDK 연동
+
+- 저장소: `https://nexus-playground.pleos.ai/repository/maven-releases/` (settings.gradle.kts), 인증 없음
+- 의존성: `ai.pleos.playground:Vehicle:2.3.2`, `ai.pleos.playground:NaviHelper:3.0.5`
+- 권한: `CAR_ENERGY`(Fuel), `CAR_DRIVE`(Brake), `NAVI_ROUTE`, `NAVI_ROUTE_SEARCH`. Pleos App Market이 승인한 범위에서만 쓸 수 있다.
+- 연료: `getFuelPercent`(%, 리터가 아님), `getCurrentFuelEconomy`(L/100km, 문서 기준). 읽기 전에 `checkFuelPercentCapabilities`, `checkCurrentFuelEconomyCapabilities`로 확인한다.
+- 정차: Brake `getCurrentBrakePedalStatus`/`registerBrakePedalStatus`. DrivingMode(NORMAL/ECO/SPORT)에는 정차 정보가 없다. Gear 도메인은 SDK에는 있지만 API Reference에 문서가 없어 쓰지 않았다.
+- 내비: `requestRoute`, `addWaypoint`, `removeWaypoint`, `getCurrentLocationInfo`, `getRouteStateInfo`, `getDestinationInfo`, `getWaypointInfo`
+- 음성(TextToSpeech, SpeechToText), FusedLocation: SDK 신청 안내에 "준비 중"으로 표시되어 구현하지 않았다.
+- Client ID/Secret은 TextToSpeech, SpeechToText에만 필요하다고 문서에 적혀 있어 이번 구현에서는 쓰지 않는다.

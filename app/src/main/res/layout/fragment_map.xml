@@ -206,8 +206,21 @@
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- 목록 머리줄: 왼쪽 "주변 23곳 · 내 위치 기준", 오른쪽 정렬 버튼과 마커 색 안내 (?) -->
+        <!-- 주행 중에만 보이는 큰 버튼. 누르면 경유지 승인 화면을 연다. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/driving_action_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_l"
+            android:layout_marginEnd="@dimen/space_l"
+            android:minHeight="88dp"
+            android:text="@string/waypoint_action"
+            android:textSize="26sp"
+            android:visibility="gone" />
+
+        <!-- 목록 머리줄: 왼쪽 "주변 23곳 · 내 위치 기준", 오른쪽 정렬 버튼 -->
         <LinearLayout
+            android:id="@+id/station_list_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
