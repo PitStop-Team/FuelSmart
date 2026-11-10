@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        어두운 테마 색. 이름과 쓰임은 values/colors.xml과 같다.
+        어두운 바탕에서는 라임이 글자색으로도 충분히 보여서(카드 바탕 12.78:1) 강조 글자에 라임을 쓴다.
+        라임을 칠한 바탕 위 글자는 밝은 테마와 같이 거의 검정이다.
+        지도 마커 색(marker_*)은 지도가 밝은 그대로라 여기서 바꾸지 않는다.
+    -->
+    <color name="brand_lime_soft">#FF2B3510</color>
+    <color name="on_brand_soft">#FFF2F3F5</color>
+    <color name="accent_text">#FFC5F04A</color>
+    <color name="on_accent">#FF111111</color>
+
+    <color name="bg_screen">#FF101113</color>
+    <color name="bg_card">#FF1C1D21</color>
+    <color name="bg_control">#FF2E3036</color>
+
+    <color name="text_primary">#FFF2F3F5</color>
+    <color name="text_secondary">#FF9AA0A6</color>
+
+    <color name="outline">#FF7A818C</color>
+    <color name="outline_soft">#FF33363C</color>
+
+    <color name="error">#FFFF6B70</color>
+    <color name="on_error">#FF111111</color>
+    <color name="error_container">#FF4A1518</color>
+    <color name="on_error_container">#FFFFD9DB</color>
+
+    <color name="inverse_surface">#FFE9ECEF</color>
+    <color name="inverse_on_surface">#FF111111</color>
+    <color name="inverse_accent">#FF557300</color>
+
+    <color name="splash_background">#FF101113</color>
+
+    <color name="saving_gain_text">#FF3DD68C</color>
+    <color name="saving_similar_text">#FF9AA0A6</color>
+    <color name="saving_loss_text">#FFFF6B70</color>
+
+    <color name="hero_saving_gain_text">#FFC5F04A</color>
+    <color name="hero_card_stroke">#FFC5F04A</color>
+
+    <color name="preferred_star">#FFFFC94D</color>
+
+    <!-- 홈 화면 위젯: 앱 설정이 아니라 휴대폰 시스템의 다크 모드를 따른다 (런처가 그림). -->
+    <color name="widget_background">#FF1C1D21</color>
+    <color name="widget_text_primary">#FFF2F3F5</color>
+    <color name="widget_text_secondary">#FF9AA0A6</color>
+    <color name="widget_icon">#FF9AA0A6</color>
+    <color name="widget_saving_gain">#FF3DD68C</color>
+    <color name="widget_saving_similar">#FF9AA0A6</color>
+    <color name="widget_saving_loss">#FFFF6B70</color>
+    <color name="widget_update_failed">#FFFF6B70</color>
+
+    <color name="trend_line">#FFC5F04A</color>
+    <color name="trend_point">#FFC5F04A</color>
+    <color name="trend_point_hole">#FF1C1D21</color>
+    <color name="trend_baseline">#FF33363C</color>
+    <color name="trend_value_text">#FFF2F3F5</color>
+    <color name="trend_axis_text">#FF9AA0A6</color>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 상세 화면 계산 내역의 안내 상자 ("이 주유소가 비교 기준이에요"). 카드 안에서 보이도록 화면 바탕색(회색) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="?android:attr/colorBackground" />
+    <corners android:radius="@dimen/corner_s" />
+</shape>

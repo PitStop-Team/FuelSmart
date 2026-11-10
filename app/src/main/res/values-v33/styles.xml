@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Android 13(API 33)부터 한국어 문장을 글자 중간이 아니라 단어(어절) 단위로 줄바꿈한다.
+        테마의 android:textViewStyle로 앱의 모든 TextView에 적용한다. 홈 화면 위젯은 런처가 앱 테마 없이 그리므로 적용되지 않는다.
+        단어 단위 줄바꿈은 글자의 언어가 한국어일 때만 동작해서, 앱 문구가 모두 한국어이므로 휴대폰 언어가 영어여도 한국어로 지정한다.
+    -->
+    <style name="Widget.FindCheapGas.TextView" parent="android:Widget.Material.TextView">
+        <item name="android:textLocale">ko-KR</item>
+        <item name="android:lineBreakWordStyle">phrase</item>
+    </style>
+</resources>

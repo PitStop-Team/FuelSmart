@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    집·회사 기준 비교 카드 한 장 (즐겨찾기 탭). 가볍게 줄인 카드:
+    - 제목 (지금 조회 위치 · 강남역 / 집 근처 · 선릉역 / 회사 근처 · 양재역)
+    - 왼쪽: 이득 1위 상호, 작은 보조 글자 한 줄 (브랜드 · 거리 · 가격 · 가져온 시각)
+    - 오른쪽: 예상 총비용 ("약 66,174원")과 "가장 저렴" 배지(라임 바탕 + 검정) 또는 "약 1,200원 더 들어요"
+    - 이득 1위가 없으면 이유 (가져오는 중, 주유소 없음, 한도 도달, 오류)
+    - 등록하지 않았으면 카드 대신 회색 점선 테두리 안에 "집 위치 등록하기" 버튼 하나
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_s"
+    tools:ignore="MergeRootFrame">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/compare_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding">
+
+            <TextView
+                android:id="@+id/compare_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="집 근처 · 선릉역" />
+
+            <LinearLayout
+                android:id="@+id/compare_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/Widget.FindCheapGas.ListRow.Start">
+
+                    <TextView
+                        android:id="@+id/compare_station"
+                        style="@style/Widget.FindCheapGas.ListRow.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="테헤란로주유소" />
+
+                    <TextView
+                        android:id="@+id/compare_detail"
+                        style="@style/Widget.FindCheapGas.ListRow.Subtitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        tools:text="GS칼텍스 · 0.8km · 1,639원 · 약 1시간 전 가격" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/Widget.FindCheapGas.ListRow.End">
+
+                    <TextView
+                        android:id="@+id/compare_total"
+                        style="@style/Widget.FindCheapGas.ListRow.Amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="약 66,174원" />
+
+                    <!-- 가장 저렴: 라임 바탕 + 거의 검정 -->
+                    <TextView
+                        android:id="@+id/compare_cheapest"
+                        style="@style/Widget.FindCheapGas.Badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xxs"
+                        android:background="@drawable/bg_badge_best"
+                        android:maxLines="1"
+                        android:text="@string/compare_cheapest"
+                        android:textAppearance="?attr/textAppearanceLabelSmall"
+                        android:textColor="?attr/colorOnPrimaryContainer"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <!-- 약 1,200원 더 들어요 -->
+                    <TextView
+                        android:id="@+id/compare_extra"
+                        style="@style/Widget.FindCheapGas.ListRow.AmountNote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/saving_loss_text"
+                        android:visibility="gone"
+                        tools:text="약 1,200원 더 들어요" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 이득 1위가 없을 때 이유 -->
+            <TextView
+                android:id="@+id/compare_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_xs"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                android:visibility="gone"
+                tools:text="반경 3km 안에 주유소가 없어요" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- 등록하지 않은 자리: 점선 테두리 안에 등록 버튼 하나 -->
+    <FrameLayout
+        android:id="@+id/compare_register_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_card_dashed"
+        android:padding="@dimen/space_s"
+        android:visibility="gone">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/compare_register"
+            style="@style/Widget.FindCheapGas.Button.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="집 위치 등록하기" />
+    </FrameLayout>
+</FrameLayout>

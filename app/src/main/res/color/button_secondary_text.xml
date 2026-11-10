@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 보조 버튼 글자: 기본 글자색, 고른 버튼(라임 바탕)은 거의 검정 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.38" android:color="@color/text_primary" android:state_enabled="false" />
+    <item android:color="@color/on_brand" android:state_checked="true" />
+    <item android:color="@color/text_primary" />
+</selector>

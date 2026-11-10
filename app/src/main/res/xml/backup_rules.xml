@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Android 11(API 30) 이하의 백업 규칙. API 31 이상은 data_extraction_rules.xml을 쓴다.
+   앱 DB(findcheapgas.db)에는 집·회사 위치가 들어 있어서 백업에서 뺀다.
+   위젯 설정(widget.xml)에는 집·회사 근처 이득 1위 주유소가 들어 있고 위젯 ID는 다른 기기에서 쓸 수 없어서 같이 뺀다.
+-->
+<full-backup-content>
+    <exclude domain="database" path="findcheapgas.db" />
+    <exclude domain="database" path="findcheapgas.db-wal" />
+    <exclude domain="database" path="findcheapgas.db-shm" />
+    <exclude domain="database" path="findcheapgas.db-journal" />
+    <exclude domain="sharedpref" path="widget.xml" />
+</full-backup-content>

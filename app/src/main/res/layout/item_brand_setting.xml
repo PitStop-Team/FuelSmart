@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 내 브랜드 목록 한 줄: 브랜드 이름, 선호(★ 선호)·숨김 표시, 할인 요약, 오른쪽 화살표 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/list_row_min_height_large"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/space_l"
+    android:paddingTop="@dimen/space_m"
+    android:paddingEnd="@dimen/space_l"
+    android:paddingBottom="@dimen/space_m">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/brand_setting_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                tools:text="SK에너지" />
+
+            <TextView
+                android:id="@+id/brand_setting_preferred"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_s"
+                android:text="@string/brand_settings_preferred"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="@color/preferred_star" />
+
+            <TextView
+                android:id="@+id/brand_setting_hidden"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_s"
+                android:text="@string/brand_settings_hidden"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="?attr/colorOnSurfaceVariant" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/brand_setting_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xxs"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="리터당 100원 할인 · 1회 한도 3,000원" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="@dimen/space_m"
+        android:importantForAccessibility="no"
+        app:srcCompat="@drawable/ic_chevron_right"
+        app:tint="?attr/colorOnSurfaceVariant" />
+</LinearLayout>

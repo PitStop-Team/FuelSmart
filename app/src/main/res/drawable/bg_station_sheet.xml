@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 주유소 목록 시트: 화면 바탕색(회색) 위에 카드를 올린다. 위쪽 모서리만 둥글게 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="?android:attr/colorBackground" />
+    <corners
+        android:topLeftRadius="@dimen/corner_card"
+        android:topRightRadius="@dimen/corner_card" />
+</shape>

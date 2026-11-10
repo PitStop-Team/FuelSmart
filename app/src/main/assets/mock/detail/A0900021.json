@@ -1,0 +1,31 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900021",
+        "POLL_DIV_CO": "E1G",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "강남충전소",
+        "VAN_ADR": "서울특별시 강남구 역삼동 718-3",
+        "NEW_ADR": "서울특별시 강남구 언주로 430",
+        "TEL": "02-0000-0021",
+        "SIGUNCD": "0114",
+        "LPG_YN": "Y",
+        "MAINT_YN": "N",
+        "CAR_WASH_YN": "N",
+        "KPETRO_YN": "N",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 315014.41,
+        "GIS_Y_COOR": 543519.48,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "K015",
+            "PRICE": 1019,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "084416"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    목록 한 줄 조각: 왼쪽(상호·보조 정보) + 오른쪽(금액·설명). 스타일은 styles.xml의 Widget.FindCheapGas.ListRow.*
+    - 오른쪽 금액("1,579원")과 설명("약 2,583원 아껴요")은 오른쪽 정렬하고 줄바꿈하지 않는다. 오른쪽이 먼저 폭을 차지한다.
+    - 공간이 모자라면 왼쪽 상호와 보조 정보가 말줄임(…)된다. 긴 상호, 큰 글꼴 설정에서도 줄이 깨지지 않는다.
+    - 보조 정보 뒤에 배지 하나(list_row_badge)를 붙일 수 있다. 보조 정보가 먼저 줄어들고 배지는 그대로 남는다.
+    - 고른 줄(activated)은 연한 라임 바탕이다 (ListRow 스타일의 bg_list_row).
+    지도 탭 주유소 목록과 즐겨찾기 목록(item_favorite.xml)이 이 조각을 쓴다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.FindCheapGas.ListRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout style="@style/Widget.FindCheapGas.ListRow.Start">
+
+        <TextView
+            android:id="@+id/list_row_title"
+            style="@style/Widget.FindCheapGas.ListRow.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="아주 긴 이름의 셀프 주유소 강남역점" />
+
+        <!-- 보조 정보는 wrap_content + weight라서 짧으면 배지가 바로 뒤에 붙고, 길면 보조 정보만 말줄임된다. -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            tools:ignore="InefficientWeight">
+
+            <TextView
+                android:id="@+id/list_row_subtitle"
+                style="@style/Widget.FindCheapGas.ListRow.Subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                tools:text="GS칼텍스 · 1.2km" />
+
+            <TextView
+                android:id="@+id/list_row_badge"
+                style="@style/Widget.FindCheapGas.ListRow.Badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:text="이득 1위"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/Widget.FindCheapGas.ListRow.End">
+
+        <TextView
+            android:id="@+id/list_row_amount"
+            style="@style/Widget.FindCheapGas.ListRow.Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1,579원" />
+
+        <TextView
+            android:id="@+id/list_row_amount_note"
+            style="@style/Widget.FindCheapGas.ListRow.AmountNote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="약 2,583원 아껴요" />
+    </LinearLayout>
+</LinearLayout>

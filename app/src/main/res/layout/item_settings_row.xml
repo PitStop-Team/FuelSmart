@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    설정 탭 카드 안의 한 줄: 왼쪽 이름, 오른쪽 지금 값(보조 글자) + 오른쪽 화살표. 누르면 그 설정을 바꾸는 화면이나 창이 열린다.
+    값이 길면 값만 말줄임(…)되고 이름은 그대로 남는다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.FindCheapGas.SettingsRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/settings_row_title"
+        style="@style/Widget.FindCheapGas.SettingsRowTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="내 차 정보" />
+
+    <TextView
+        android:id="@+id/settings_row_value"
+        style="@style/Widget.FindCheapGas.SettingsRowValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="연비 15km/L · 40L" />
+
+    <ImageView
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="@dimen/space_xs"
+        android:importantForAccessibility="no"
+        app:srcCompat="@drawable/ic_chevron_right"
+        app:tint="?attr/colorOnSurfaceVariant" />
+</LinearLayout>

@@ -1,0 +1,37 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900020",
+        "POLL_DIV_CO": "SKE",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "양재셀프주유소",
+        "VAN_ADR": "서울특별시 서초구 양재동 102-14",
+        "NEW_ADR": "서울특별시 서초구 바우뫼로 201",
+        "TEL": "02-0000-0020",
+        "SIGUNCD": "0115",
+        "LPG_YN": "N",
+        "MAINT_YN": "Y",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "Y",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 314013.32,
+        "GIS_Y_COOR": 540813.57,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1589,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "061224"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1449,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "061224"
+          }
+        ]
+      }
+    ]
+  }
+}

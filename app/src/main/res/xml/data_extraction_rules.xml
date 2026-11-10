@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Android 12(API 31) 이상의 백업 규칙.
+   앱 DB(findcheapgas.db)에는 집·회사 위치가 들어 있어서 클라우드 백업과 기기 이전에서 뺀다.
+   이 규칙에 따라 즐겨찾기도 같은 DB에 있으므로 백업되지 않는다.
+   위젯 설정(widget.xml)에는 집·회사 근처 이득 1위 주유소가 들어 있고 위젯 ID는 다른 기기에서 쓸 수 없어서 같이 뺀다.
+   그 밖의 설정(SharedPreferences)은 그대로 백업된다.
+-->
+<data-extraction-rules>
+    <cloud-backup>
+        <exclude domain="database" path="findcheapgas.db" />
+        <exclude domain="database" path="findcheapgas.db-wal" />
+        <exclude domain="database" path="findcheapgas.db-shm" />
+        <exclude domain="database" path="findcheapgas.db-journal" />
+        <exclude domain="sharedpref" path="widget.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <exclude domain="database" path="findcheapgas.db" />
+        <exclude domain="database" path="findcheapgas.db-wal" />
+        <exclude domain="database" path="findcheapgas.db-shm" />
+        <exclude domain="database" path="findcheapgas.db-journal" />
+        <exclude domain="sharedpref" path="widget.xml" />
+    </device-transfer>
+</data-extraction-rules>

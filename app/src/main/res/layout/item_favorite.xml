@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    즐겨찾기 탭 한 줄: 목록 한 줄 조각(view_list_row_amount)을 그대로 쓴다.
+    - 왼쪽: 상호 / 브랜드 · 조회 위치에서 거리, 오래된 가격이면 배지 ("약 2시간 전 가격")
+    - 오른쪽: 지금 고른 유종 가격 / 예상 이득 설명 ("약 2,583원 아껴요") 또는 짧은 이유 ("5km 밖이라 계산 안 해요")
+    - 오피넷에서 찾을 수 없는 주유소는 아래에 삭제 버튼. 주소는 상세 화면에서만 보여준다.
+    길게 누르면 삭제 메뉴, 왼쪽으로 밀어도 삭제.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/favorite_row"
+        layout="@layout/view_list_row_amount" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/favorite_delete"
+        style="@style/Widget.FindCheapGas.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_xs"
+        android:layout_marginBottom="@dimen/space_xs"
+        android:text="@string/favorite_delete"
+        android:visibility="gone" />
+</LinearLayout>

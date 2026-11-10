@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 브랜드 빠른 필터 시트의 안내 (선택지를 쓸 수 없는 이유, 숨긴 브랜드 안내) -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/space_xxxl"
+    android:paddingBottom="@dimen/space_s"
+    android:textAppearance="?attr/textAppearanceBodySmall"
+    android:textColor="?attr/colorOnSurfaceVariant"
+    tools:ignore="RtlSymmetry"
+    tools:text="@string/brand_filter_discount_disabled" />

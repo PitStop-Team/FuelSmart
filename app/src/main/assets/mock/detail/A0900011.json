@@ -1,0 +1,37 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900011",
+        "POLL_DIV_CO": "RTE",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "개포셀프알뜰주유소",
+        "VAN_ADR": "서울특별시 강남구 개포동 1229-3",
+        "NEW_ADR": "서울특별시 강남구 개포로 512",
+        "TEL": "02-0000-0011",
+        "SIGUNCD": "0114",
+        "LPG_YN": "N",
+        "MAINT_YN": "N",
+        "CAR_WASH_YN": "N",
+        "KPETRO_YN": "N",
+        "CVS_YN": "N",
+        "GIS_X_COOR": 316217.01,
+        "GIS_Y_COOR": 542418.88,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1609,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "071620"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1468,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "071620"
+          }
+        ]
+      }
+    ]
+  }
+}

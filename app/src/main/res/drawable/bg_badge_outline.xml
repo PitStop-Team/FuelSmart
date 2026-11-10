@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 목록의 "최저가" 배지: 회색 테두리만 있는 상자 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke
+        android:width="@dimen/stroke_thin"
+        android:color="?attr/colorOutline" />
+    <corners android:radius="@dimen/corner_xs" />
+</shape>

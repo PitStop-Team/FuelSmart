@@ -1,0 +1,43 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900001",
+        "POLL_DIV_CO": "SKE",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "역삼셀프주유소",
+        "VAN_ADR": "서울특별시 강남구 역삼동 737-12",
+        "NEW_ADR": "서울특별시 강남구 테헤란로 152",
+        "TEL": "02-0000-0001",
+        "SIGUNCD": "0114",
+        "LPG_YN": "N",
+        "MAINT_YN": "N",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "Y",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 314565.51,
+        "GIS_Y_COOR": 544215.38,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1659,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "081512"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1519,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "081512"
+          },
+          {
+            "PRODCD": "B034",
+            "PRICE": 1929,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "081512"
+          }
+        ]
+      }
+    ]
+  }
+}

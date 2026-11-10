@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 브랜드 빠른 필터 시트의 선택지 한 줄 (전체, 할인 브랜드만, 선호 브랜드만, 브랜드별) -->
+<com.google.android.material.checkbox.MaterialCheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/touch_target"
+    android:textAppearance="?attr/textAppearanceBodyLarge"
+    tools:text="할인 브랜드만" />

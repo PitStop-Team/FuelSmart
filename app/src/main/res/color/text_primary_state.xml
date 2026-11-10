@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 기본 글자색. 누를 수 없는 상태는 흐리게 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.38" android:color="@color/text_primary" android:state_enabled="false" />
+    <item android:color="@color/text_primary" />
+</selector>

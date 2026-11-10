@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 주요 버튼 바탕: 라임. 누를 수 없을 때는 회색 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/bg_control" android:state_enabled="false" />
+    <item android:color="@color/brand_lime" />
+</selector>

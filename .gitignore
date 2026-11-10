@@ -1,0 +1,62 @@
+# ===== API 키, 개인 설정 =====
+# API 키와 SDK 경로가 들어가는 파일
+local.properties
+secrets.properties
+*.env
+.env*
+
+# Firebase, Google 서비스 설정 파일
+google-services.json
+GoogleService-Info.plist
+
+# ===== 앱 서명 키 =====
+*.jks
+*.keystore
+keystore.properties
+signing.properties
+*.p12
+*.pem
+*.key
+*.pepk
+
+# ===== 빌드 결과물 =====
+build/
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+*.ap_
+*.dex
+output-metadata.json
+/app/release/
+/app/debug/
+
+# ===== Gradle =====
+.gradle/
+.kotlin/
+
+# ===== Android Studio / IntelliJ =====
+# 내 PC 경로, 실행 기록 등이 들어 있음
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ===== VS Code =====
+.vscode/
+
+# ===== 로그, 임시 파일 =====
+*.log
+*.hprof
+*.tmp
+*.bak
+*.orig
+*.swp
+*~
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
+desktop.ini

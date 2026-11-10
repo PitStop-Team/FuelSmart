@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 상세 화면 예상 이득 계산 내역 한 줄: 항목 이름과 계산식(또는 설명), 오른쪽에 금액 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/touch_target"
+    android:orientation="horizontal"
+    android:paddingTop="@dimen/space_s"
+    android:paddingBottom="@dimen/space_s">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/saving_row_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="이동 비용" />
+
+        <TextView
+            android:id="@+id/saving_row_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="4.2km ÷ 12km/L × 1,640원" />
+
+        <TextView
+            android:id="@+id/saving_row_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorError"
+            android:visibility="gone"
+            tools:text="@string/detail_saving_discount_no_cap_warning" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/saving_row_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_m"
+        android:gravity="end"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        tools:text="약 574원" />
+
+</LinearLayout>

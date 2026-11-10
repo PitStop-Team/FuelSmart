@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    집·회사 위치 검색 시트. 제목, 개인정보 안내, 검색창과 검색 버튼, 검색 중 / 결과 없음 / 오류 안내, 결과 목록.
+    결과를 고르면 저장하고 닫힌다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/space_l">
+
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/place_search_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/space_l"
+        android:paddingEnd="@dimen/space_l"
+        android:textAppearance="?attr/textAppearanceTitleMedium"
+        tools:text="집 위치 검색" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_xs"
+        android:paddingStart="@dimen/space_l"
+        android:paddingEnd="@dimen/space_l"
+        android:text="@string/place_settings_privacy"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_s"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_l"
+        android:paddingEnd="@dimen/space_s">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/place_search_hint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/place_search_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/place_search_button"
+            android:layout_width="@dimen/touch_target"
+            android:layout_height="@dimen/touch_target"
+            android:layout_marginStart="@dimen/space_xs"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/search_button"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="?attr/colorOnSurfaceVariant" />
+    </LinearLayout>
+
+    <!-- 검색 중, 결과 없음, 오류 안내 -->
+    <LinearLayout
+        android:id="@+id/place_search_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/space_xxl"
+        android:visibility="gone">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/place_search_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_s"
+            android:indeterminate="true"
+            app:indicatorSize="@dimen/progress_size_small" />
+
+        <TextView
+            android:id="@+id/place_search_status_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textAppearance="?attr/textAppearanceBodyMedium"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/place_search_retry"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_s"
+            android:text="@string/search_retry" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/place_search_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_s"
+        tools:listitem="@layout/item_search_result" />
+</LinearLayout>

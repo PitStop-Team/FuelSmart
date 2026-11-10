@@ -1,0 +1,43 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900008",
+        "POLL_DIV_CO": "HDO",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "선릉셀프주유소",
+        "VAN_ADR": "서울특별시 강남구 대치동 1003-7",
+        "NEW_ADR": "서울특별시 강남구 선릉로 433",
+        "TEL": "02-0000-0008",
+        "SIGUNCD": "0114",
+        "LPG_YN": "N",
+        "MAINT_YN": "Y",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "Y",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 316319.21,
+        "GIS_Y_COOR": 545320.68,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1665,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "075915"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1526,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "075915"
+          },
+          {
+            "PRODCD": "B034",
+            "PRICE": 1939,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "075915"
+          }
+        ]
+      }
+    ]
+  }
+}

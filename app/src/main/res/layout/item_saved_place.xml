@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    집·회사 위치 카드 안의 한 줄: 왼쪽 종류(집 / 회사), 장소 이름, 주소(없으면 "등록 안 함"),
+    오른쪽 지우기와 등록·바꾸기 작은 텍스트 버튼. 이름과 주소가 길면 말줄임(…)하고 버튼은 그대로 둔다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/list_row_min_height_large"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/space_l"
+    android:paddingTop="@dimen/space_m"
+    android:paddingEnd="@dimen/space_s"
+    android:paddingBottom="@dimen/space_m">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/saved_place_kind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="집" />
+
+        <TextView
+            android:id="@+id/saved_place_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_xxs"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="선릉역 2호선" />
+
+        <TextView
+            android:id="@+id/saved_place_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="서울 강남구 선릉로" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saved_place_remove"
+        style="@style/Widget.FindCheapGas.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/button_height_compact"
+        android:text="@string/place_remove"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/saved_place_edit"
+        style="@style/Widget.FindCheapGas.Button.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/button_height_compact"
+        tools:text="@string/place_change" />
+</LinearLayout>

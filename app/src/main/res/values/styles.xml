@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        글자 단계 (TextAppearance). 글꼴은 Pretendard, 크기는 dimens.xml의 text_*.
+        글자색은 Material3와 같게 이어받는다: 작은 글씨·라벨은 보조 글자색(?android:textColorSecondary), 나머지는 기본 글자색.
+        레이아웃에서 android:textColor를 주면 그 색이 우선한다. themes.xml에서 Material3 글자 단계 속성을 모두 이 스타일로 바꾼다.
+    -->
+    <!-- 큰 숫자: 예상 이득 금액처럼 화면의 주인공 숫자. 숫자 폭을 같게 해서 금액이 바뀌어도 흔들리지 않는다. -->
+    <style name="TextAppearance.FindCheapGas.Number" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_number</item>
+        <item name="android:fontFamily">@font/app_font</item>
+        <item name="fontFamily">@font/app_font</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+    </style>
+
+    <!-- 화면 제목 -->
+    <style name="TextAppearance.FindCheapGas.ScreenTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_screen_title</item>
+        <item name="android:fontFamily">@font/app_font</item>
+        <item name="fontFamily">@font/app_font</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <!-- 카드 제목, 목록의 상호 -->
+    <style name="TextAppearance.FindCheapGas.CardTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_card_title</item>
+        <item name="android:fontFamily">@font/app_font_semibold</item>
+        <item name="fontFamily">@font/app_font_semibold</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <!-- 구역 제목 -->
+    <style name="TextAppearance.FindCheapGas.SectionTitle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_section_title</item>
+        <item name="android:fontFamily">@font/app_font_semibold</item>
+        <item name="fontFamily">@font/app_font_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 본문 -->
+    <style name="TextAppearance.FindCheapGas.Body" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_body</item>
+        <item name="android:fontFamily">@font/app_font</item>
+        <item name="fontFamily">@font/app_font</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 보조 문장 (주소, 조건 문구) -->
+    <style name="TextAppearance.FindCheapGas.BodySmall" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_body_small</item>
+        <item name="android:fontFamily">@font/app_font</item>
+        <item name="fontFamily">@font/app_font</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 작은 글씨 (안내, 가격 기준 일시) -->
+    <style name="TextAppearance.FindCheapGas.Caption" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/text_caption</item>
+        <item name="android:fontFamily">@font/app_font</item>
+        <item name="fontFamily">@font/app_font</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 버튼 글자 -->
+    <style name="TextAppearance.FindCheapGas.Label" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">@dimen/text_label</item>
+        <item name="android:fontFamily">@font/app_font_semibold</item>
+        <item name="fontFamily">@font/app_font_semibold</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 칩, 탭, 범례 같은 작은 라벨 -->
+    <style name="TextAppearance.FindCheapGas.LabelMedium" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/text_label_medium</item>
+        <item name="android:fontFamily">@font/app_font_medium</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- 배지 같은 가장 작은 라벨 -->
+    <style name="TextAppearance.FindCheapGas.LabelSmall" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">@dimen/text_label_small</item>
+        <item name="android:fontFamily">@font/app_font_medium</item>
+        <item name="fontFamily">@font/app_font_medium</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <!-- ===== 모양 ===== -->
+    <!-- 완전히 둥근 모양 (칩, 검색창) -->
+    <style name="ShapeAppearance.FindCheapGas.Pill" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ShapeAppearance.FindCheapGas.Button" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/corner_button</item>
+    </style>
+
+    <style name="ShapeAppearance.FindCheapGas.Card" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/corner_card</item>
+    </style>
+
+    <!-- 아래에서 올라오는 시트: 위쪽 모서리만 둥글게 -->
+    <style name="ShapeAppearance.FindCheapGas.Sheet" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/corner_card</item>
+        <item name="cornerSizeTopRight">@dimen/corner_card</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- ===== 카드 ===== -->
+    <!--
+        카드: 그림자와 테두리 없이 회색 화면 바탕과의 색 차이로만 구분한다. 모서리 16dp.
+        테마의 카드 스타일(기본, Outlined, Filled)이 모두 이 스타일이라 레이아웃이 바뀌지 않아도 따라온다.
+        안쪽 여백(16dp)은 카드 안 레이아웃이 @dimen/card_padding으로 둔다.
+    -->
+    <style name="Widget.FindCheapGas.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/bg_card</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Card</item>
+    </style>
+
+    <!-- 지도 위에 떠 있는 카드 (검색창, 위치 안내, 범례). 지도와 구분되도록 옅은 그림자를 둔다. -->
+    <style name="Widget.FindCheapGas.Card.Floating" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/bg_card</item>
+        <item name="cardElevation">@dimen/elevation_floating</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Card</item>
+    </style>
+
+    <!--
+        주인공 카드: 화면마다 하나, 주인공 숫자(예상 이득)를 담는 카드 (지도 탭의 이득 1위 카드, 상세 화면 맨 위 카드).
+        밝게는 흰 카드, 어둡게는 라임 테두리 (hero_card_stroke, 밝은 테마에서는 투명).
+    -->
+    <style name="Widget.FindCheapGas.Card.Hero">
+        <item name="strokeColor">@color/hero_card_stroke</item>
+        <item name="strokeWidth">@dimen/stroke_emphasis</item>
+    </style>
+
+    <!-- ===== 버튼 ===== -->
+    <!-- 주요 버튼: 라임 바탕 + 거의 검정 글자, 모서리 12dp, 높이 52dp. 화면마다 하나만 쓴다. 테마의 기본 버튼 스타일 -->
+    <style name="Widget.FindCheapGas.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/button_primary_background</item>
+        <item name="android:textColor">@color/button_primary_text</item>
+        <item name="iconTint">@color/button_primary_text</item>
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.Label</item>
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Button</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!--
+        보조 버튼: 카드 색 바탕 + 기본 글자색. 카드 안에서도 보이도록 얇은 회색 테두리를 둔다.
+        토글 그룹(지도 검색창의 장소 / 주유소 이름)에서 고른 버튼은 라임 바탕이 된다. 테마의 Outlined 버튼 스타일
+    -->
+    <style name="Widget.FindCheapGas.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="backgroundTint">@color/button_secondary_background</item>
+        <item name="android:textColor">@color/button_secondary_text</item>
+        <item name="iconTint">@color/button_secondary_text</item>
+        <item name="strokeColor">@color/button_secondary_stroke</item>
+        <item name="strokeWidth">@dimen/stroke_thin</item>
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.Label</item>
+        <item name="android:minHeight">@dimen/touch_target</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Button</item>
+    </style>
+
+    <!--
+        검색창 안의 작은 선택 버튼 (장소 / 주유소 이름). 고른 쪽만 라임 바탕 + 거의 검정 글자(보조 버튼의 checked 색).
+        보이는 높이는 32dp로 작게 하고, 위아래 inset으로 누르는 영역 48dp는 지킨다.
+    -->
+    <style name="Widget.FindCheapGas.Button.SearchMode" parent="Widget.FindCheapGas.Button.Secondary">
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.LabelSmall</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">@dimen/touch_target</item>
+        <item name="android:insetTop">@dimen/search_mode_inset</item>
+        <item name="android:insetBottom">@dimen/search_mode_inset</item>
+        <item name="android:paddingStart">@dimen/space_s</item>
+        <item name="android:paddingEnd">@dimen/space_s</item>
+    </style>
+
+    <!-- 텍스트 버튼: 바탕 없이 강조 글자색(밝게 올리브, 어둡게 라임) -->
+    <style name="Widget.FindCheapGas.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.Label</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Button</item>
+    </style>
+
+    <!-- 지도 위 둥근 버튼 (내 위치): 카드 색 바탕 + 기본 글자색 아이콘 -->
+    <style name="Widget.FindCheapGas.FloatingActionButton" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/bg_card</item>
+        <item name="tint">@color/text_primary</item>
+        <item name="rippleColor">@color/outline_soft</item>
+    </style>
+
+    <!-- ===== 칩 ===== -->
+    <!-- 칩: 선택됨은 라임 바탕 + 거의 검정 글자, 선택 안 됨은 카드 색 바탕 + 얇은 회색 테두리, 완전히 둥글게 -->
+    <style name="Widget.FindCheapGas.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/chip_background</item>
+        <item name="chipStrokeColor">@color/chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/stroke_thin</item>
+        <item name="android:textColor">@color/chip_text</item>
+        <item name="checkedIconTint">@color/on_brand</item>
+        <item name="chipIconTint">@color/chip_text</item>
+        <item name="closeIconTint">@color/chip_text</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Pill</item>
+    </style>
+
+    <!--
+        지도 위 필터 줄의 칩: 누르면 선택 메뉴가 열리고, 오른쪽에 ▼ 표시.
+        선택 상태가 없어서 항상 카드 색 바탕 + 얇은 회색 테두리이고, 지도와 구분되도록 옅은 그림자를 둔다.
+    -->
+    <style name="Widget.FindCheapGas.FilterDropdownChip" parent="Widget.Material3.Chip.Assist.Elevated">
+        <item name="chipBackgroundColor">@color/bg_card</item>
+        <item name="chipStrokeColor">@color/outline_soft</item>
+        <item name="chipStrokeWidth">@dimen/stroke_thin</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Pill</item>
+        <item name="closeIcon">@drawable/ic_arrow_drop_down</item>
+        <item name="closeIconTint">@color/text_secondary</item>
+        <item name="closeIconVisible">true</item>
+        <item name="closeIconSize">@dimen/chip_dropdown_icon_size</item>
+        <item name="closeIconStartPadding">0dp</item>
+        <item name="android:checkable">false</item>
+    </style>
+
+    <!-- 지도 위 조회 위치 칩 ("강남역 기준"): 라임 바탕 + 거의 검정 글자, 오른쪽 X를 누르면 내 위치 기준으로 돌아간다 -->
+    <style name="Widget.FindCheapGas.OriginChip" parent="Widget.Material3.Chip.Assist.Elevated">
+        <item name="chipBackgroundColor">?attr/colorPrimaryContainer</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:textColor">?attr/colorOnPrimaryContainer</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Pill</item>
+        <item name="closeIcon">@drawable/ic_close</item>
+        <item name="closeIconTint">?attr/colorOnPrimaryContainer</item>
+        <item name="closeIconVisible">true</item>
+        <item name="closeIconSize">@dimen/chip_close_icon_size</item>
+        <item name="android:checkable">false</item>
+    </style>
+
+    <!-- ===== 하단 탭, 시트, 다이얼로그, 스낵바, 입력칸, 툴바 ===== -->
+    <!-- 하단 탭: 카드 색 바탕, 고른 탭은 라임 표시 위에 거의 검정 아이콘 -->
+    <style name="Widget.FindCheapGas.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/bg_card</item>
+        <item name="itemIconTint">@color/bottom_nav_icon</item>
+        <item name="itemTextColor">@color/bottom_nav_text</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.FindCheapGas.LabelMedium</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.FindCheapGas.LabelMedium</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.FindCheapGas.BottomNavigation.ActiveIndicator</item>
+    </style>
+
+    <style name="Widget.FindCheapGas.BottomNavigation.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/brand_lime</item>
+    </style>
+
+    <!-- 아래에서 올라오는 시트 (검색 결과, 브랜드 필터, 내 브랜드 수정, 집·회사 검색): 카드 색, 위쪽 모서리 16dp -->
+    <style name="Widget.FindCheapGas.BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@color/bg_card</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Sheet</item>
+    </style>
+
+    <style name="ThemeOverlay.FindCheapGas.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.FindCheapGas.BottomSheet</item>
+        <!-- Material3 시트는 기본 버튼을 텍스트 버튼으로 바꾸므로, 시트 안의 주요 버튼(저장)도 라임 버튼으로 되돌린다. -->
+        <item name="materialButtonStyle">@style/Widget.FindCheapGas.Button.Primary</item>
+    </style>
+
+    <!-- 다이얼로그 (길찾기 앱 선택, 화면 테마 고르기): 카드 색, 모서리 16dp, 버튼은 텍스트 버튼 -->
+    <style name="ThemeOverlay.FindCheapGas.MaterialAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="alertDialogStyle">@style/Widget.FindCheapGas.AlertDialog</item>
+        <item name="buttonBarPositiveButtonStyle">@style/Widget.FindCheapGas.Button.Text</item>
+        <item name="buttonBarNegativeButtonStyle">@style/Widget.FindCheapGas.Button.Text</item>
+        <item name="buttonBarNeutralButtonStyle">@style/Widget.FindCheapGas.Button.Text</item>
+    </style>
+
+    <style name="Widget.FindCheapGas.AlertDialog" parent="MaterialAlertDialog.Material3">
+        <item name="backgroundTint">@color/bg_card</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Card</item>
+    </style>
+
+    <!-- 스낵바: 반대 색 바탕(밝은 테마는 어둡게), 모서리 12dp, 실행 취소 글자는 반대 색의 강조 색 -->
+    <style name="Widget.FindCheapGas.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Button</item>
+    </style>
+
+    <!-- 입력칸: 테두리 상자, 모서리 12dp, 고르면 강조 색 테두리 -->
+    <style name="Widget.FindCheapGas.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="shapeAppearance">@style/ShapeAppearance.FindCheapGas.Button</item>
+    </style>
+
+    <!-- 위쪽 제목 줄: 화면 바탕색, 제목은 카드 제목 크기 -->
+    <style name="Widget.FindCheapGas.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="titleTextAppearance">@style/TextAppearance.FindCheapGas.CardTitle</item>
+        <item name="navigationIconTint">@color/text_primary</item>
+    </style>
+
+    <!--
+        테마의 android:textViewStyle. Android 12 이하에는 줄바꿈 방식을 고를 수 없어 플랫폼 기본 그대로 둔다.
+        Android 13 이상은 values-v33/styles.xml에서 단어(어절) 단위 줄바꿈을 더한다.
+    -->
+    <style name="Widget.FindCheapGas.TextView" parent="android:Widget.Material.TextView" />
+
+    <!-- ===== 목록 한 줄 (지도 탭 주유소 목록) ===== -->
+    <!--
+        목록 한 줄: 왼쪽(상호·보조 정보)과 오른쪽(금액·설명)으로 나눈다. layout/view_list_row_amount.xml 참고.
+        오른쪽은 금액("약 2,900원")과 설명("더 들어요") 두 줄을 오른쪽 정렬하고 줄바꿈하지 않는다.
+        오른쪽이 먼저 자리를 차지하고, 공간이 모자라면 왼쪽의 상호와 보조 정보를 말줄임(…) 처리한다.
+        큰 글꼴 설정에서도 줄이 깨지지 않게 모든 글자를 한 줄로 둔다.
+    -->
+    <style name="Widget.FindCheapGas.ListRow" parent="">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/list_row_min_height_large</item>
+        <item name="android:paddingStart">@dimen/space_l</item>
+        <item name="android:paddingTop">@dimen/space_m</item>
+        <item name="android:paddingEnd">@dimen/space_l</item>
+        <item name="android:paddingBottom">@dimen/space_m</item>
+        <item name="android:background">@drawable/bg_list_row</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <!-- 왼쪽 묶음: 오른쪽 금액이 차지하고 남는 폭을 모두 쓴다 -->
+    <style name="Widget.FindCheapGas.ListRow.Start" parent="">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.FindCheapGas.ListRow.End" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/space_m</item>
+        <item name="android:gravity">end</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="Widget.FindCheapGas.ListRow.Title" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.CardTitle</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="Widget.FindCheapGas.ListRow.Subtitle" parent="">
+        <item name="android:layout_marginTop">@dimen/space_xxs</item>
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.BodySmall</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- 오른쪽 금액: 줄바꿈과 말줄임 없이 한 줄, 숫자 폭을 같게 -->
+    <style name="Widget.FindCheapGas.ListRow.Amount" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.CardTitle</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">end</item>
+        <item name="android:fontFeatureSettings">tnum</item>
+    </style>
+
+    <!-- 금액 아래 설명 ("약 2,583원 아껴요"). 색은 코드에서 예상 이득 구간에 맞춘다. -->
+    <style name="Widget.FindCheapGas.ListRow.AmountNote" parent="">
+        <item name="android:layout_marginTop">@dimen/space_xxs</item>
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.LabelMedium</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">end</item>
+    </style>
+
+    <!--
+        보조 정보 뒤 배지 하나 ("이득 1위", "100원 할인 적용", "최저가"). 바탕과 글자색은 코드에서 정한다:
+        이득 1위는 라임 바탕 + 거의 검정(bg_badge_best), 할인 적용은 바탕 없이 올리브 글자, 최저가는 회색 테두리(bg_badge_outline).
+    -->
+    <style name="Widget.FindCheapGas.ListRow.Badge" parent="Widget.FindCheapGas.Badge">
+        <item name="android:layout_marginTop">@dimen/space_xxs</item>
+        <item name="android:layout_marginStart">@dimen/space_s</item>
+        <item name="android:textAppearance">@style/TextAppearance.FindCheapGas.LabelSmall</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- 배지의 안쪽 여백 -->
+    <style name="Widget.FindCheapGas.Badge" parent="">
+        <item name="android:paddingStart">@dimen/badge_padding_horizontal</item>
+        <item name="android:paddingTop">@dimen/badge_padding_vertical</item>
+        <item name="android:paddingEnd">@dimen/badge_padding_horizontal</item>
+        <item name="android:paddingBottom">@dimen/badge_padding_vertical</item>
+    </style>
+
+    <!-- ===== 화면 조각 ===== -->
+    <!-- 마커 색 안내 한 줄: 색 점 + 설명 (점 색은 각 TextView의 drawableTint) -->
+    <style name="Widget.FindCheapGas.MapLegendItem" parent="">
+        <item name="android:drawablePadding">@dimen/space_m</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/space_s</item>
+        <item name="android:paddingBottom">@dimen/space_s</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="drawableStartCompat">@drawable/bg_legend_dot</item>
+    </style>
+
+    <!-- 길찾기 앱 선택창의 한 줄 (앱 이름, 설치 여부) -->
+    <style name="Widget.FindCheapGas.RouteAppRow" parent="">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/list_row_min_height</item>
+        <item name="android:paddingStart">@dimen/space_xxl</item>
+        <item name="android:paddingEnd">@dimen/space_xxl</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <!--
+        상세 화면 아래쪽 카드 (유종별 가격, 주유소 정보, 평균가 대비, 7일 가격 추이).
+        회색 바탕 위 흰 카드(어둡게는 카드 색), 카드 사이는 12dp, 안쪽 여백은 card_padding.
+    -->
+    <style name="Widget.FindCheapGas.DetailCard" parent="Widget.FindCheapGas.Card">
+        <item name="android:layout_marginTop">@dimen/space_m</item>
+    </style>
+
+    <style name="Widget.FindCheapGas.DetailCard.Content" parent="">
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">@dimen/card_padding</item>
+    </style>
+
+    <!-- 카드 제목 ("유종별 가격", "평균가 대비", "7일 가격 추이") -->
+    <style name="Widget.FindCheapGas.DetailCard.Title" parent="">
+        <item name="android:textAppearance">?attr/textAppearanceTitleMedium</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- 주유소 정보 카드 안의 작은 제목 (주소, 전화, 부가시설): 보조 글자색 -->
+    <style name="Widget.FindCheapGas.DetailSectionTitle" parent="">
+        <item name="android:layout_marginTop">@dimen/space_l</item>
+        <item name="android:textAppearance">?attr/textAppearanceLabelMedium</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <!-- 설정 탭 카드 안의 누를 수 있는 한 줄 (이름, 오른쪽에 지금 값) -->
+    <style name="Widget.FindCheapGas.SettingsRow" parent="">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">@dimen/list_row_min_height</item>
+        <item name="android:paddingStart">@dimen/space_l</item>
+        <item name="android:paddingEnd">@dimen/space_l</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <!-- 설정 탭 한 줄의 이름 (내 차 정보, 화면 테마): 본문 글자, 한 줄 -->
+    <style name="Widget.FindCheapGas.SettingsRowTitle" parent="">
+        <item name="android:paddingTop">@dimen/space_m</item>
+        <item name="android:paddingBottom">@dimen/space_m</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyLarge</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!--
+        설정 탭 한 줄의 지금 값 (연비 15km/L · 40L, 휘발유, 시스템 설정 따르기): 오른쪽 정렬한 보조 글자.
+        남는 폭을 모두 쓰고, 길면 값만 말줄임한다.
+    -->
+    <style name="Widget.FindCheapGas.SettingsRowValue" parent="">
+        <item name="android:layout_marginStart">@dimen/space_m</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- 설정 탭 묶음 이름 (내 차, 할인과 브랜드, 위치): 카드 위의 작은 보조 글자, 카드 안 글자 줄에 맞춘다 -->
+    <style name="Widget.FindCheapGas.SettingsSectionTitle" parent="">
+        <item name="android:layout_marginTop">@dimen/space_xxl</item>
+        <item name="android:layout_marginBottom">@dimen/space_s</item>
+        <item name="android:paddingStart">@dimen/space_l</item>
+        <item name="android:paddingEnd">@dimen/space_l</item>
+        <item name="android:textAppearance">?attr/textAppearanceLabelMedium</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <!-- 설정 탭 카드 아래 작은 안내 글자 -->
+    <style name="Widget.FindCheapGas.SettingsFooter" parent="">
+        <item name="android:layout_marginTop">@dimen/space_s</item>
+        <item name="android:paddingStart">@dimen/space_l</item>
+        <item name="android:paddingEnd">@dimen/space_l</item>
+        <item name="android:textAppearance">?attr/textAppearanceBodySmall</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+    </style>
+
+    <!-- 설정 탭 카드 안 줄 사이 구분선: 글자 줄부터 시작 -->
+    <style name="Widget.FindCheapGas.SettingsDivider" parent="Widget.Material3.MaterialDivider">
+        <item name="dividerInsetStart">@dimen/space_l</item>
+        <item name="dividerColor">?attr/colorOutlineVariant</item>
+    </style>
+</resources>

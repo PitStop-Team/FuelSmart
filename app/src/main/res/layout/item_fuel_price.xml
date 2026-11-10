@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    상세 화면 유종별 가격 한 줄: 왼쪽 유종과 그 아래 "선택한 유종" 표시, 오른쪽 가격과 가격 기준 일시. 선택한 유종은 activated로 강조.
+    목록 한 줄과 같은 규칙: 오른쪽 가격·일시는 줄바꿈하지 않고 먼저 자리를 차지하고,
+    공간이 모자라면 왼쪽 유종 이름과 선택 표시를 말줄임(…) 처리한다. 큰 글꼴 설정에서도 줄이 깨지지 않는다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_fuel_price_row"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/touch_target"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/space_m"
+    android:paddingTop="@dimen/space_s"
+    android:paddingEnd="@dimen/space_m"
+    android:paddingBottom="@dimen/space_s">
+
+    <LinearLayout style="@style/Widget.FindCheapGas.ListRow.Start">
+
+        <TextView
+            android:id="@+id/fuel_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            tools:text="고급휘발유" />
+
+        <TextView
+            android:id="@+id/fuel_selected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/detail_selected_fuel"
+            android:textAppearance="?attr/textAppearanceLabelSmall"
+            android:textColor="?attr/colorPrimary" />
+    </LinearLayout>
+
+    <LinearLayout style="@style/Widget.FindCheapGas.ListRow.End">
+
+        <TextView
+            android:id="@+id/fuel_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            tools:text="1,659원" />
+
+        <TextView
+            android:id="@+id/fuel_trade_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textAppearance="?attr/textAppearanceLabelSmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            tools:text="11월 4일 08:15 기준" />
+    </LinearLayout>
+
+</LinearLayout>

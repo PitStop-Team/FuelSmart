@@ -1,0 +1,43 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900004",
+        "POLL_DIV_CO": "SOL",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "테헤란로주유소",
+        "VAN_ADR": "서울특별시 강남구 역삼동 702-15",
+        "NEW_ADR": "서울특별시 강남구 테헤란로 309",
+        "TEL": "02-0000-0004",
+        "SIGUNCD": "0114",
+        "LPG_YN": "N",
+        "MAINT_YN": "N",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "N",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 315322.91,
+        "GIS_Y_COOR": 544865.98,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1678,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "070348"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1535,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "070348"
+          },
+          {
+            "PRODCD": "B034",
+            "PRICE": 1949,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "070348"
+          }
+        ]
+      }
+    ]
+  }
+}

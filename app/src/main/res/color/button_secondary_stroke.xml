@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 보조 버튼 테두리: 카드 안에서도 보이도록 얇은 회색, 고른 버튼은 라임 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/brand_lime" android:state_checked="true" />
+    <item android:color="@color/outline_soft" />
+</selector>

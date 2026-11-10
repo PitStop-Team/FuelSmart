@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 지도 색 범례의 작은 점. 색은 TextView의 drawableTint로 칠한다. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@android:color/white" />
+    <size
+        android:width="@dimen/legend_dot_size"
+        android:height="@dimen/legend_dot_size" />
+</shape>

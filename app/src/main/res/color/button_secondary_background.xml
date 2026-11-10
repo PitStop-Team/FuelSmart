@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 보조 버튼 바탕: 카드 색, 토글 그룹에서 고른 버튼은 라임 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/brand_lime" android:state_checked="true" />
+    <item android:color="@color/bg_card" />
+</selector>

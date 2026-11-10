@@ -1,0 +1,43 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900007",
+        "POLL_DIV_CO": "GSC",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "양재대로주유소",
+        "VAN_ADR": "서울특별시 서초구 양재동 340-2",
+        "NEW_ADR": "서울특별시 서초구 양재대로 215",
+        "TEL": "02-0000-0007",
+        "SIGUNCD": "0115",
+        "LPG_YN": "N",
+        "MAINT_YN": "Y",
+        "CAR_WASH_YN": "N",
+        "KPETRO_YN": "N",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 314420.31,
+        "GIS_Y_COOR": 542116.58,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1699,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "083740"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1555,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "083740"
+          },
+          {
+            "PRODCD": "C004",
+            "PRICE": 1405,
+            "TRADE_DT": "20261103",
+            "TRADE_TM": "180000"
+          }
+        ]
+      }
+    ]
+  }
+}

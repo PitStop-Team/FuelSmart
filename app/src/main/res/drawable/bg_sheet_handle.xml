@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 지도 시트 손잡이 막대 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/outline" />
+    <corners android:radius="@dimen/corner_xs" />
+    <size
+        android:width="@dimen/sheet_handle_width"
+        android:height="@dimen/sheet_handle_height" />
+</shape>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 목록 한 줄 바탕: 지도에서 마커를 눌러 고른 줄(activated)만 연한 라임으로 칠한다. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorSecondaryContainer" />
+        </shape>
+    </item>
+    <item android:drawable="@android:color/transparent" />
+</selector>

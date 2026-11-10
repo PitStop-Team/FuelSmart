@@ -1,0 +1,31 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900024",
+        "POLL_DIV_CO": "SKG",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "양재충전소",
+        "VAN_ADR": "서울특별시 서초구 양재동 18-5",
+        "NEW_ADR": "서울특별시 서초구 강남대로 37",
+        "TEL": "02-0000-0024",
+        "SIGUNCD": "0115",
+        "LPG_YN": "Y",
+        "MAINT_YN": "Y",
+        "CAR_WASH_YN": "N",
+        "KPETRO_YN": "N",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 313820.71,
+        "GIS_Y_COOR": 541814.18,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "K015",
+            "PRICE": 1005,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "075543"
+          }
+        ]
+      }
+    ]
+  }
+}

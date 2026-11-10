@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        가로 화면은 높이가 낮아서 세로 화면 값(152dp, 검색창과 필터 줄 아래)까지만 올리면 이득 1위 카드만으로 시트가 꽉 차서
+        목록을 볼 수 없다. 가로 화면에서는 검색창 아래(위쪽 여백 8dp + 검색창 48dp + 아래 여백 8dp)까지 올려서 목록이 보이게 한다.
+        필터 줄은 시트를 올린 동안 시트에 가려지고, 시트를 내리면 다시 보인다.
+    -->
+    <dimen name="station_sheet_expanded_offset">64dp</dimen>
+</resources>

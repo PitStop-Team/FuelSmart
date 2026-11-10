@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 상세 화면 평균가 대비 한 줄: 평균과의 리터당 차이, 그 아래 내 주유량 환산 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/touch_target"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/space_s"
+    android:paddingBottom="@dimen/space_s">
+
+    <TextView
+        android:id="@+id/average_row_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyLarge"
+        tools:text="전국 평균 1,712원보다 리터당 41원 저렴" />
+
+    <TextView
+        android:id="@+id/average_row_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodySmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        tools:text="40L 기준 약 1,640원 저렴" />
+
+</LinearLayout>

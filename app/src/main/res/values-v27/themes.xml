@@ -1,0 +1,10 @@
+<resources>
+    <!--
+        Android 8.1(API 27)부터 내비게이션 바 아이콘을 어둡게 그릴 수 있어서, 이때만 내비게이션 바를 카드 색(하단 탭과 같은 색)으로 칠한다.
+        그 아래 버전은 아이콘이 항상 흰색이라 시스템 기본 색을 그대로 둔다.
+    -->
+    <style name="Theme.FindCheapGas" parent="Base.Theme.FindCheapGas">
+        <item name="android:navigationBarColor">@color/bg_card</item>
+        <item name="android:windowLightNavigationBar">@bool/light_system_bars</item>
+    </style>
+</resources>

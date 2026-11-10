@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    위젯 구성 화면 (홈 화면에 위젯을 놓을 때, Android 12 이상에서 위젯을 길게 눌러 다시 고를 때).
+    흰 카드 하나에 집 근처 / 회사 근처 두 줄, 카드 아래 작은 안내 글자. 줄을 고르면 바로 닫힌다.
+    장소 이름과 주소는 보여주지 않고 등록 여부만 보여준다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/widget_config_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationContentDescription="@string/widget_config_cancel"
+        app:navigationIcon="@drawable/ic_close"
+        app:title="@string/widget_config_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/space_xxl">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/space_l"
+            android:paddingTop="@dimen/space_s"
+            android:paddingEnd="@dimen/space_l">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/widget_config_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:minHeight="@dimen/list_row_min_height_large"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/space_l"
+                        android:paddingTop="@dimen/space_m"
+                        android:paddingEnd="@dimen/space_l"
+                        android:paddingBottom="@dimen/space_m">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/widget_config_home"
+                            android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+                        <TextView
+                            android:id="@+id/widget_config_home_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+
+                    <com.google.android.material.divider.MaterialDivider
+                        style="@style/Widget.FindCheapGas.SettingsDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <LinearLayout
+                        android:id="@+id/widget_config_work"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:minHeight="@dimen/list_row_min_height_large"
+                        android:orientation="vertical"
+                        android:paddingStart="@dimen/space_l"
+                        android:paddingTop="@dimen/space_m"
+                        android:paddingEnd="@dimen/space_l"
+                        android:paddingBottom="@dimen/space_m">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/widget_config_work"
+                            android:textAppearance="?attr/textAppearanceBodyLarge" />
+
+                        <TextView
+                            android:id="@+id/widget_config_work_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                style="@style/Widget.FindCheapGas.SettingsFooter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/widget_config_description" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 브랜드 빠른 필터 시트에서 묶음 선택지(전체, 할인, 선호)와 브랜드별 체크 사이 구분선 -->
+<com.google.android.material.divider.MaterialDivider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/space_xs"
+    android:layout_marginBottom="@dimen/space_xs" />

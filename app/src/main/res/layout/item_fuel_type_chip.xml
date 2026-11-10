@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 처음 실행 화면의 유종 선택 칩 하나 -->
+<com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.FindCheapGas.Chip"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />

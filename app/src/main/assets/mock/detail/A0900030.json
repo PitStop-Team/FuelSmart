@@ -1,0 +1,31 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900030",
+        "POLL_DIV_CO": "E1G",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "잠원충전소",
+        "VAN_ADR": "서울특별시 서초구 잠원동 71-6",
+        "NEW_ADR": "서울특별시 서초구 잠원로 155",
+        "TEL": "02-0000-0030",
+        "SIGUNCD": "0115",
+        "LPG_YN": "Y",
+        "MAINT_YN": "N",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "N",
+        "CVS_YN": "N",
+        "GIS_X_COOR": 311413.32,
+        "GIS_Y_COOR": 546813.57,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "K015",
+            "PRICE": 1029,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "090117"
+          }
+        ]
+      }
+    ]
+  }
+}

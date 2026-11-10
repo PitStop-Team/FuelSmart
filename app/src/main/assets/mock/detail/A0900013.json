@@ -1,0 +1,43 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900013",
+        "POLL_DIV_CO": "GSC",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "대치주유소",
+        "VAN_ADR": "서울특별시 강남구 대치동 316-11",
+        "NEW_ADR": "서울특별시 강남구 삼성로 225",
+        "TEL": "02-0000-0013",
+        "SIGUNCD": "0114",
+        "LPG_YN": "N",
+        "MAINT_YN": "Y",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "N",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 316718.81,
+        "GIS_Y_COOR": 543923.08,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1758,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "080127"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1615,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "080127"
+          },
+          {
+            "PRODCD": "B034",
+            "PRICE": 2049,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "080127"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    이득 1위 카드 본문 (가로 화면). 가로 화면은 높이가 낮아서 세로 화면처럼 네 줄을 쌓으면 시트를 내린 상태에서 카드 아래가 잘리므로,
+    왼쪽 칸에 "이득 1위" 줄과 주인공 숫자, 오른쪽 칸에 상호 / 브랜드 · 거리 · 가격과 길찾기, 계산 기준을 둔다.
+    id와 각 글자의 스타일은 세로 화면(layout/view_best_card_content.xml)과 같다.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/best_card_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:baselineAligned="false"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="@dimen/card_padding"
+    android:paddingTop="@dimen/space_xxs"
+    android:paddingEnd="@dimen/card_padding"
+    android:paddingBottom="@dimen/space_xs">
+
+    <!-- 왼쪽: "이득 1위" 또는 "선택한 주유소"(오른쪽에 "이득 1위 보기")와 주인공 숫자 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/best_card_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:minHeight="@dimen/touch_target"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:textColor="?attr/colorPrimary"
+                tools:text="@string/best_card_label" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/best_card_show_best"
+                style="@style/Widget.FindCheapGas.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/text_button_align_offset"
+                android:minWidth="0dp"
+                android:text="@string/best_card_show_best"
+                android:textAppearance="?attr/textAppearanceLabelMedium"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/best_card_headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceDisplaySmall"
+            tools:text="약 2,583원 아낄 수 있어요"
+            tools:textColor="@color/hero_saving_gain_text" />
+    </LinearLayout>
+
+    <!-- 오른쪽: 상호 / 브랜드 · 거리 · 가격과 길찾기, 그 아래 계산 기준. 카드 높이를 줄이려고 줄 사이 여백은 두지 않는다. -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_xxl"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/best_card_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAppearance="?attr/textAppearanceTitleMedium"
+                    tools:text="역삼셀프주유소" />
+
+                <TextView
+                    android:id="@+id/best_card_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xxs"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    tools:text="SK에너지 · 1.2km · 1,579원" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/best_card_route"
+                style="@style/Widget.FindCheapGas.Button.Primary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_m"
+                android:contentDescription="@string/detail_route_description"
+                android:minHeight="@dimen/touch_target"
+                android:text="@string/detail_route"
+                app:icon="@drawable/ic_directions" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/best_card_basis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/space_xxs"
+            android:gravity="center_vertical"
+            android:minHeight="@dimen/touch_target"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            app:drawableEndCompat="@drawable/ic_chevron_right"
+            app:drawableTint="?attr/colorOnSurfaceVariant"
+            tools:text="연비 12km/L · 40L 기준 (기본값)" />
+    </LinearLayout>
+</LinearLayout>

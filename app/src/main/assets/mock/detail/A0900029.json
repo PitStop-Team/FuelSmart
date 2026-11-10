@@ -1,0 +1,31 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900029",
+        "POLL_DIV_CO": "SKG",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "개포충전소",
+        "VAN_ADR": "서울특별시 강남구 개포동 1266-9",
+        "NEW_ADR": "서울특별시 강남구 개포로 640",
+        "TEL": "02-0000-0029",
+        "SIGUNCD": "0114",
+        "LPG_YN": "Y",
+        "MAINT_YN": "Y",
+        "CAR_WASH_YN": "N",
+        "KPETRO_YN": "N",
+        "CVS_YN": "N",
+        "GIS_X_COOR": 316813.32,
+        "GIS_Y_COOR": 541213.57,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "K015",
+            "PRICE": 969,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "074402"
+          }
+        ]
+      }
+    ]
+  }
+}

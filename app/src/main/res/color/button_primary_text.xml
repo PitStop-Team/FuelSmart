@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 주요 버튼 글자: 라임 위 거의 검정. 누를 수 없을 때는 흐린 기본 글자색 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.38" android:color="@color/text_primary" android:state_enabled="false" />
+    <item android:color="@color/on_brand" />
+</selector>

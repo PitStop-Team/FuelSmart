@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 길찾기: Android 11 이상에서 카카오맵, 티맵 설치 여부를 확인하려면 패키지를 선언해야 한다. -->
+    <queries>
+        <package android:name="net.daum.android.map" />
+        <package android:name="com.skt.tmap.ku" />
+    </queries>
+
+    <application
+        android:name=".FindCheapGasApp"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FindCheapGas"
+        tools:targetApi="31">
+        <!-- 메인 화면. 지도 탭 검색창에 입력할 때 키보드가 화면 아래(이득 1위 카드, 하단 탭)를 그냥 덮게 해서 화면이 밀려 올라가지 않게 한다. -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FindCheapGas.Starting"
+            android:windowSoftInputMode="adjustNothing">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 내 차 정보 입력 (처음 실행, 수정). 키보드가 올라오면 화면을 줄여서 입력칸과 버튼이 가리지 않게 한다. -->
+        <activity
+            android:name=".ui.onboarding.OnboardingActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 주유소 상세 화면 (지도 탭, 즐겨찾기 탭에서 연다) -->
+        <activity
+            android:name=".ui.detail.StationDetailActivity"
+            android:exported="false" />
+        <!-- 내 브랜드 (설정 탭에서 연다). 수정 시트에 입력할 때 키보드가 시트를 가리지 않게 한다. -->
+        <activity
+            android:name=".ui.brand.BrandSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 집·회사 위치 (설정 탭, 즐겨찾기 탭 비교 카드에서 연다). 검색 시트에 입력할 때 키보드가 시트를 가리지 않게 한다. -->
+        <activity
+            android:name=".ui.place.PlaceSettingsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 홈 화면 위젯을 놓을 때 집 / 회사를 고르는 화면. 런처가 열어야 하므로 exported -->
+        <activity
+            android:name=".widget.WidgetConfigActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.FindCheapGas">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        <!--
+            홈 화면 위젯 (집 또는 회사 근처의 이득 1위 주유소). 위치 권한은 쓰지 않고 설정에서 등록한 위치만 쓴다.
+            새로고침 버튼은 앱 안에서만 보내는 명시적 Intent라 따로 intent-filter를 두지 않는다.
+        -->
+        <receiver
+            android:name=".widget.GasWidgetProvider"
+            android:exported="false"
+            android:label="@string/widget_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+    </application>
+
+</manifest>

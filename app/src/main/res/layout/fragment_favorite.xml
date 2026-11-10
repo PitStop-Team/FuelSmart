@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    즐겨찾기 탭. 제목은 고정하고, 그 아래는 한 번에 스크롤한다 (당겨서 새로고침).
+    - 맨 위 작은 글자 한 줄: 계산 기준 · 유종 · 반경 · 조회 위치 (누르면 내 차 정보 수정)
+    - 주인공 카드: 집·회사 기준 비교의 결론 ("회사 근처에서 넣으면 가장 저렴해요" + 그 카드의 예상 총비용).
+      가장 저렴한 카드를 고를 수 없으면 (비교할 카드가 두 장보다 적으면) 큰 숫자 없이 짧은 안내만
+    - 비교 카드 세 장 (지금 조회 위치 / 집 근처 / 회사 근처)과 금액 설명
+    - 저장한 주유소: 제목과 개수, 안내 (오늘 조회 한도 도달, 30분 이상 지난 가격), 목록 카드 (목록 한 줄 조각,
+      왼쪽으로 밀거나 길게 눌러 삭제). 비어 있으면 가운데에 안내와 "지도에서 주유소 찾기" 버튼
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/colorBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_l"
+        android:paddingStart="@dimen/space_l"
+        android:paddingEnd="@dimen/space_l"
+        android:text="@string/favorite_title"
+        android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/favorite_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_xs"
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/favorite_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/space_xxl">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/space_l"
+                android:paddingEnd="@dimen/space_l">
+
+                <!-- 계산 기준 · 유종 · 반경 · 조회 위치. 누르면 내 차 정보 수정 -->
+                <TextView
+                    android:id="@+id/favorite_basis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawablePadding="@dimen/space_xxs"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/touch_target"
+                    android:textAppearance="?attr/textAppearanceLabelMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    app:drawableEndCompat="@drawable/ic_chevron_right"
+                    app:drawableTint="?attr/colorOnSurfaceVariant"
+                    tools:text="내 차 기준 · 연비 15km/L · 40L · 휘발유 · 반경 3km · 내 위치 기준" />
+
+                <!-- 주인공 카드: 집·회사 기준 비교의 결론 -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/compare_hero"
+                    style="@style/Widget.FindCheapGas.Card.Hero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xs">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/card_padding">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/compare_title"
+                            android:textAppearance="?attr/textAppearanceLabelMedium"
+                            android:textColor="?attr/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/compare_hero_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_s"
+                            android:textAppearance="?attr/textAppearanceTitleMedium"
+                            tools:text="회사 근처에서 넣으면 가장 저렴해요" />
+
+                        <TextView
+                            android:id="@+id/compare_hero_amount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xxs"
+                            android:textAppearance="@style/TextAppearance.FindCheapGas.Number"
+                            tools:text="약 66,174원" />
+
+                        <TextView
+                            android:id="@+id/compare_hero_caption"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_xs"
+                            android:textAppearance="?attr/textAppearanceBodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="양재셀프주유소에서 넣을 때 예상 총비용이에요" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <include
+                    android:id="@+id/compare_current"
+                    layout="@layout/item_place_compare" />
+
+                <include
+                    android:id="@+id/compare_home"
+                    layout="@layout/item_place_compare" />
+
+                <include
+                    android:id="@+id/compare_work"
+                    layout="@layout/item_place_compare" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s"
+                    android:text="@string/compare_note"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <!-- 저장한 주유소 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_xxl"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/favorite_list_title"
+                        android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+                    <TextView
+                        android:id="@+id/favorite_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?attr/textAppearanceLabelMedium"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        tools:text="3 / 20곳" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/favorite_notice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s"
+                    android:background="@drawable/bg_saving_notice"
+                    android:padding="@dimen/space_m"
+                    android:textAppearance="?attr/textAppearanceBodySmall"
+                    android:visibility="gone"
+                    tools:text="@string/favorite_stale_notice"
+                    tools:visibility="visible" />
+
+                <!-- 즐겨찾기는 최대 20곳이라 스크롤 안에서 한 번에 그린다. -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/favorite_list_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/favorite_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_favorite" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- 비어 있을 때: 가운데에 짧은 안내와 지도로 가는 버튼 -->
+                <LinearLayout
+                    android:id="@+id/favorite_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/space_xxxl"
+                    android:paddingBottom="@dimen/space_xxxl"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/favorite_empty"
+                        android:textAppearance="?attr/textAppearanceTitleSmall" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_xs"
+                        android:gravity="center"
+                        android:text="@string/favorite_empty_hint"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="?attr/colorOnSurfaceVariant" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/favorite_find_on_map"
+                        style="@style/Widget.FindCheapGas.Button.Secondary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_l"
+                        android:text="@string/favorite_find_on_map" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>

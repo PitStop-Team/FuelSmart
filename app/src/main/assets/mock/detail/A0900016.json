@@ -1,0 +1,43 @@
+{
+  "RESULT": {
+    "OIL": [
+      {
+        "UNI_ID": "A0900016",
+        "POLL_DIV_CO": "SOL",
+        "GPOLL_DIV_CO": "",
+        "OS_NM": "잠원주유소",
+        "VAN_ADR": "서울특별시 서초구 잠원동 52-3",
+        "NEW_ADR": "서울특별시 서초구 잠원로 84",
+        "TEL": "02-0000-0016",
+        "SIGUNCD": "0115",
+        "LPG_YN": "N",
+        "MAINT_YN": "N",
+        "CAR_WASH_YN": "Y",
+        "KPETRO_YN": "Y",
+        "CVS_YN": "Y",
+        "GIS_X_COOR": 311618.11,
+        "GIS_Y_COOR": 546614.78,
+        "OIL_PRICE": [
+          {
+            "PRODCD": "B027",
+            "PRICE": 1638,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "064738"
+          },
+          {
+            "PRODCD": "D047",
+            "PRICE": 1495,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "064738"
+          },
+          {
+            "PRODCD": "B034",
+            "PRICE": 1909,
+            "TRADE_DT": "20261104",
+            "TRADE_TM": "064738"
+          }
+        ]
+      }
+    ]
+  }
+}

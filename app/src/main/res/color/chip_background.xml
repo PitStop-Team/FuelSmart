@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 칩 바탕: 선택됨 라임, 선택 안 됨 카드 색 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/brand_lime" android:state_checked="true" />
+    <item android:color="@color/bg_card" />
+</selector>
