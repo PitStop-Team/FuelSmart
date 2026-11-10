@@ -101,6 +101,9 @@ dependencies {
     implementation(libs.play.services.location)
     implementation(project(":domain"))
     implementation(libs.proj4j)
+    // Pleos Connect SDK
+    implementation(libs.pleos.vehicle)
+    implementation(libs.pleos.navihelper)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
     implementation(libs.core.splashscreen)

@@ -6,6 +6,15 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- Pleos Connect SDK 권한. Pleos App Market이 승인한 범위 안에서만 쓸 수 있다. -->
+    <!-- Vehicle: 연료(Fuel) 읽기 -->
+    <uses-permission android:name="pleos.car.permission.CAR_ENERGY" />
+    <!-- Vehicle: 브레이크(Brake), 주행 모드(DrivingMode) 읽기 -->
+    <uses-permission android:name="pleos.car.permission.CAR_DRIVE" />
+    <!-- NaviHelper: 경로/위치 정보 조회, 경로 요청과 경유지 변경 -->
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE" />
+    <uses-permission android:name="pleos.car.permission.NAVI_ROUTE_SEARCH" />
+
     <application
         android:name=".FindCheapGasApp"
         android:allowBackup="true"
