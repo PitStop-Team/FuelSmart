@@ -29,6 +29,9 @@ import com.example.findcheapgas.model.SortOrder;
 import com.example.findcheapgas.model.StationError;
 import com.example.findcheapgas.model.StationQuery;
 import com.example.findcheapgas.model.StationSaving;
+import com.example.findcheapgas.navigation.RoadDistanceResolver;
+import com.example.findcheapgas.navigation.RouteDistanceProvider;
+import com.example.findcheapgas.navigation.UserInputRouteDistanceProvider;
 import com.example.findcheapgas.model.StationSearchResult;
 import com.example.findcheapgas.model.UserLocation;
 import com.example.findcheapgas.util.PlaceCompareBuilder;
@@ -126,6 +129,8 @@ public class MapViewModel extends AndroidViewModel {
     // fetchedStations를 조회한 위치와 유종
     private SearchOrigin fetchedOrigin;
     private FuelType fetchedFuelType;
+    // 실제 도로 거리를 주는 곳. 지금은 사용자 입력 구현(비어 있음)이라 항상 구간별 계수로 대체된다.
+    private final RouteDistanceProvider routeDistanceProvider = new UserInputRouteDistanceProvider();
     // 조회가 겹치면 마지막 요청의 결과만 반영한다.
     private int stationRequestId = 0;
 
@@ -600,13 +605,21 @@ public class MapViewModel extends AndroidViewModel {
     /**
      * @param selectId 새 목록에 있으면 목록을 내보내기 전에 선택할 주유소 (주유소 이름 검색에서 고른 곳). 없으면 null
      */
+    private RoadDistanceResolver roadDistances(SearchOrigin from) {
+        if (from == null) {
+            return RoadDistanceResolver.FIXED_FACTOR;
+        }
+        return RoadDistanceResolver.withFallback(routeDistanceProvider, from.getLatitude(), from.getLongitude());
+    }
+
     private void updateDisplayedStations(String selectId) {
         if (fetchedStations == null) {
             return;
         }
         BrandSettings brandSettings = brandSettingsRepository.getCurrent();
         List<StationSaving> result = StationListBuilder.build(fetchedStations, radius.getValue(),
-                sortOrder.getValue(), carInfoRepository.getCurrent(), brandSettings, brandFilter.getValue());
+                sortOrder.getValue(), carInfoRepository.getCurrent(), brandSettings, brandFilter.getValue(),
+                roadDistances(fetchedOrigin));
         if (selectId != null && containsStation(result, selectId)) {
             selectedStationId.setValue(selectId);
         }

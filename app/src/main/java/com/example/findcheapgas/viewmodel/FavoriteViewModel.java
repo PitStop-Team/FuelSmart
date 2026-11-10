@@ -19,6 +19,8 @@ import com.example.findcheapgas.model.FavoriteItem;
 import com.example.findcheapgas.model.FavoritePrice;
 import com.example.findcheapgas.model.FavoriteStation;
 import com.example.findcheapgas.model.FuelType;
+import com.example.findcheapgas.navigation.RoadDistanceResolver;
+import com.example.findcheapgas.navigation.UserInputRouteDistanceProvider;
 import com.example.findcheapgas.util.FavoriteListBuilder;
 
 import java.util.Collections;
@@ -198,6 +200,9 @@ public class FavoriteViewModel extends AndroidViewModel {
         }
         Map<String, FavoritePrice> current = getFuelType() == pricesFuelType ? prices : Collections.emptyMap();
         items.setValue(FavoriteListBuilder.build(favorites, current, around,
-                carInfoRepository.getCurrent(), brandSettingsRepository.getCurrent()));
+                carInfoRepository.getCurrent(), brandSettingsRepository.getCurrent(),
+                around == null ? RoadDistanceResolver.FIXED_FACTOR
+                        : RoadDistanceResolver.withFallback(new UserInputRouteDistanceProvider(),
+                                around.getOrigin().getLatitude(), around.getOrigin().getLongitude())));
     }
 }

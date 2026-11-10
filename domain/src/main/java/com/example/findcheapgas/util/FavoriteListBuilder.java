@@ -10,6 +10,7 @@ import com.example.findcheapgas.model.FavoritePrice;
 import com.example.findcheapgas.model.FavoriteStation;
 import com.example.findcheapgas.model.SearchOrigin;
 import com.example.findcheapgas.model.StationQuery;
+import com.example.findcheapgas.navigation.RoadDistanceResolver;
 import com.example.findcheapgas.model.StationSaving;
 
 import java.util.ArrayList;
@@ -38,15 +39,29 @@ public final class FavoriteListBuilder {
     public static List<FavoriteItem> build(List<FavoriteStation> favorites, Map<String, FavoritePrice> prices,
                                            @Nullable AroundStations around, CarInfo carInfo,
                                            BrandSettings brandSettings) {
+        return build(favorites, prices, around, carInfo, brandSettings, RoadDistanceResolver.FIXED_FACTOR);
+    }
+
+    /** build()와 같고, 도로 거리를 resolver로 구한다. */
+    public static List<FavoriteItem> build(List<FavoriteStation> favorites, Map<String, FavoritePrice> prices,
+                                           @Nullable AroundStations around, CarInfo carInfo,
+                                           BrandSettings brandSettings, RoadDistanceResolver distances) {
         List<FavoriteItem> items = new ArrayList<>(favorites.size());
         for (FavoriteStation favorite : favorites) {
-            items.add(buildItem(favorite, prices.get(favorite.getId()), around, carInfo, brandSettings));
+            items.add(buildItem(favorite, prices.get(favorite.getId()), around, carInfo, brandSettings,
+                    distances));
         }
         return Collections.unmodifiableList(items);
     }
 
     static FavoriteItem buildItem(FavoriteStation favorite, @Nullable FavoritePrice price,
                                   @Nullable AroundStations around, CarInfo carInfo, BrandSettings brandSettings) {
+        return buildItem(favorite, price, around, carInfo, brandSettings, RoadDistanceResolver.FIXED_FACTOR);
+    }
+
+    static FavoriteItem buildItem(FavoriteStation favorite, @Nullable FavoritePrice price,
+                                  @Nullable AroundStations around, CarInfo carInfo, BrandSettings brandSettings,
+                                  RoadDistanceResolver distances) {
         if (around == null) {
             return new FavoriteItem(favorite, price, null, null, FavoriteItem.SavingStatus.NO_ORIGIN);
         }
@@ -69,7 +84,7 @@ public final class FavoriteListBuilder {
         }
         StationSaving saving = SavingCalculator.estimateAgainst(
                 favorite.toGasStation(price.getPrice(), distance),
-                displayed.get(0).getBaseline(), carInfo, brandSettings);
+                displayed.get(0).getBaseline(), carInfo, brandSettings, distances);
         return new FavoriteItem(favorite, price, distance, saving, FavoriteItem.SavingStatus.CALCULATED);
     }
 

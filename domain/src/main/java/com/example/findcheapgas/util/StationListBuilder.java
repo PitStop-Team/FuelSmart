@@ -7,6 +7,7 @@ import com.example.findcheapgas.model.GasStation;
 import com.example.findcheapgas.model.SearchRadius;
 import com.example.findcheapgas.model.SortOrder;
 import com.example.findcheapgas.model.StationSaving;
+import com.example.findcheapgas.navigation.RoadDistanceResolver;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -38,9 +39,16 @@ public final class StationListBuilder {
      */
     public static List<StationSaving> build(List<GasStation> all, SearchRadius radius, SortOrder sortOrder,
                                             CarInfo carInfo, BrandSettings brandSettings, BrandFilter brandFilter) {
+        return build(all, radius, sortOrder, carInfo, brandSettings, brandFilter, RoadDistanceResolver.FIXED_FACTOR);
+    }
+
+    /** build()와 같고, 도로 거리를 resolver로 구한다. */
+    public static List<StationSaving> build(List<GasStation> all, SearchRadius radius, SortOrder sortOrder,
+                                            CarInfo carInfo, BrandSettings brandSettings, BrandFilter brandFilter,
+                                            RoadDistanceResolver distances) {
         List<GasStation> stations = filterByBrandFilter(
                 excludeHidden(filterByRadius(all, radius), brandSettings), brandSettings, brandFilter);
-        List<StationSaving> calculated = SavingCalculator.calculate(stations, carInfo, brandSettings);
+        List<StationSaving> calculated = SavingCalculator.calculate(stations, carInfo, brandSettings, distances);
         List<StationSaving> result = new ArrayList<>(calculated.size());
         for (StationSaving saving : calculated) {
             result.add(saving.withPreferred(brandSettings.isPreferred(saving.getStation().getBrandCode())));
