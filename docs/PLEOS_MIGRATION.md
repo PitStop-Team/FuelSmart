@@ -62,3 +62,16 @@ FindCheapGas(폰 앱)를 Pleos Connect 차량용 앱으로 개조하기 위한 1
 
 - `docs/pleos/` 폴더(Pleos SDK 문서)가 없다. 5단계(NaviHelper), 6단계(Vehicle/STT/TTS)는 문서가 추가되기 전까지 구현하지 않는다.
 - 빌드 환경: JDK 17 + Android SDK 34 필요. 프로젝트 경로에 한글이 있으면 테스트 워커가 클래스를 못 찾으므로 ASCII 경로(예: `subst X:`)에서 빌드해야 한다.
+
+## 5. 진행 상태
+
+| 단계 | 상태 | 비고 |
+|---|---|---|
+| 1 분석 | 완료 | 이 문서 |
+| 2 :domain 분리 | 완료 | 순수 모델/계산/예외와 해당 테스트 이동. 동작 변경 없음 |
+| 3 인터페이스, 거리 계산 | 완료 | VehicleDataSource, NavigationController, RouteDistanceProvider 와 사용자 입력/모의 구현. 구간별 계수 대체 경로와 테스트. 지도 목록(MapViewModel)과 즐겨찾기 목록이 이 경로를 사용. PlaceCompareBuilder는 아직 고정 계수 1.4 |
+| 4 앱 껍데기 | 완료 (빌드까지) | minSdk 28, 앱 이름 "가는길 주유", applicationId com.pitstop.routefuel, 위젯/카카오맵 SDK/길찾기 앱 호출 제거, 목록 + 이득 1위 카드 화면. 에뮬레이터 실행 확인은 사람이 해야 함. 자바 패키지명은 com.example.findcheapgas 그대로 |
+| 5 NaviHelper | 건너뜀 | docs/pleos/ 없음 ("문서 필요") |
+| 6 주행/정차 UI, 음성 | 건너뜀 | docs/pleos/ 없음 ("문서 필요"). Vehicle 정차 판단 API, STT/TTS 모두 "문서에 없음" |
+
+4단계에서 기능 제거와 함께 지운 테스트: 위젯 로직(WidgetContentBuilderTest, WidgetStationLoaderTest), 지도 터치 가드(MapGestureGuardTest), 길찾기 앱 URI(RouteLinksTest).
