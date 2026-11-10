@@ -38,22 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] TABS = {TAG_MAP, TAG_FAVORITE, TAG_SETTINGS};
 
     private static final String KEY_CURRENT_TAB = "current_tab";
-    // 홈 화면 위젯을 눌러서 열었을 때 그 위젯이 고른 위치 종류 (HOME / WORK). 좌표는 넣지 않고 DB에서 읽는다.
-    private static final String EXTRA_WIDGET_PLACE_KIND = "widget_place_kind";
-
     private String currentTab = TAG_MAP;
     private BottomNavigationView bottomNav;
-
-    /**
-     * 홈 화면 위젯을 눌렀을 때 여는 Intent. 앱이 이미 열려 있으면 위에 쌓인 화면을 닫고 onNewIntent로 받는다.
-     * 지도 탭에서 그 위치를 조회 위치("집 기준")로 주변을 조회하고 이득 1위 주유소를 선택한다.
-     */
-    public static Intent createWidgetIntent(Context context, SavedPlace.Kind kind) {
-        return new Intent(context, MainActivity.class)
-                .putExtra(EXTRA_WIDGET_PLACE_KIND, kind.name())
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP
-                        | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,53 +95,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         });
 
-        // 화면 회전으로 다시 만들어질 때는 이미 처리했으므로 다시 조회하지 않는다.
-        if (savedInstanceState == null) {
-            handleWidgetIntent(getIntent());
-        }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        handleWidgetIntent(intent);
-    }
-
-    /**
-     * 위젯을 눌러서 열었으면 집·회사 기준 비교 카드를 누를 때와 같은 흐름으로 지도 탭에서 그 위치의 이득 1위를 선택한다.
-     * 위치는 DB에서 읽은 뒤에 넘기고, 그 사이 위치를 지웠으면 지도 탭만 보여준다.
-     */
-    private void handleWidgetIntent(@Nullable Intent intent) {
-        String kindName = intent != null ? intent.getStringExtra(EXTRA_WIDGET_PLACE_KIND) : null;
-        if (kindName == null || bottomNav == null) {
-            return;
-        }
-        intent.removeExtra(EXTRA_WIDGET_PLACE_KIND);
-        SavedPlace.Kind kind;
-        try {
-            kind = SavedPlace.Kind.valueOf(kindName);
-        } catch (IllegalArgumentException unknown) {
-            return;
-        }
-        showMapTab();
-        MapViewModel mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
-        LiveData<SavedPlaces> places = SavedPlaceRepository.getInstance(this).getPlaces();
-        places.observe(this, new Observer<SavedPlaces>() {
-            @Override
-            public void onChanged(SavedPlaces loaded) {
-                if (loaded == null) {
-                    return;
-                }
-                places.removeObserver(this);
-                SavedPlace place = loaded.get(kind);
-                if (place != null) {
-                    mapViewModel.showSavedPlaceOnMap(getString(kind == SavedPlace.Kind.HOME
-                                    ? R.string.place_kind_home : R.string.place_kind_work),
-                            place.getLatitude(), place.getLongitude());
-                }
-            }
-        });
     }
 
     /** 지도 탭으로 바꾼다 (즐겨찾기 탭의 "지도에서 보기"). 하단 탭 선택도 함께 바뀐다. */

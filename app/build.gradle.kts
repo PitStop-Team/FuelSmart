@@ -114,8 +114,6 @@ dependencies {
     implementation(libs.lifecycle.livedata)
     implementation(libs.core.splashscreen)
     implementation(libs.swiperefreshlayout)
-    // 홈 화면 위젯의 주기적 갱신 (2.10부터는 compileSdk 35가 필요해서 2.9를 쓴다)
-    implementation(libs.work.runtime)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -397,40 +397,5 @@
     <string name="favorite_restore_failed">즐겨찾기가 %1$d곳이 차서 되돌리지 못했어요</string>
 
     <!-- 홈 화면 위젯 -->
-    <string name="widget_name">주변 이득 1위 주유소</string>
-    <string name="widget_description">집이나 회사 근처에서 예상 이득이 가장 큰 주유소와 가격을 보여줘요</string>
-    <string name="widget_title_home">집 근처</string>
-    <string name="widget_title_work">회사 근처</string>
-    <string name="widget_detail">%1$s · %2$s</string>
-    <string name="widget_footer">%1$s · %2$s</string>
-    <string name="widget_refresh">새로고침</string>
-    <string name="widget_refreshing">갱신 중</string>
-    <string name="widget_update_failed">갱신 실패</string>
-    <string name="widget_update_failed_daily_limit">갱신 실패 · 한도 도달</string>
-    <string name="widget_update_failed_network">갱신 실패 · 연결 없음</string>
-    <string name="widget_update_failed_api_key">갱신 실패 · API 키 없음</string>
-    <string name="widget_not_registered_home">앱에서 집 위치를 등록해 주세요</string>
-    <string name="widget_not_registered_work">앱에서 회사 위치를 등록해 주세요</string>
-    <string name="widget_loading">가격을 가져오는 중이에요</string>
-    <string name="widget_outside_mock">가짜 데이터는 강남역 주변에만 있어요</string>
-    <string name="widget_empty_radius">반경 %1$s 안에 주유소가 없어요</string>
-    <string name="widget_empty_hidden">주변 주유소가 모두 숨긴 브랜드예요</string>
-    <string name="widget_empty_filter">브랜드 필터에 맞는 주유소가 없어요</string>
-    <string name="widget_error_daily_limit">오늘 조회 한도에 도달했어요. 내일 다시 가져와요</string>
-    <string name="widget_error_network">인터넷에 연결할 수 없어요. 연결되면 다시 가져와요</string>
-    <string name="widget_error_opinet">가격을 가져오지 못했어요. 새로고침을 눌러 주세요</string>
-    <string name="widget_error_api_key">오피넷 API 키가 설정되지 않아 가격을 가져올 수 없어요</string>
-    <string name="widget_preview_station">강남 셀프주유소</string>
-    <string name="widget_preview_price">1,659원</string>
-    <string name="widget_preview_saving">약 1,547원 이득</string>
-    <string name="widget_preview_detail">GS칼텍스 · 1.2km</string>
-    <string name="widget_preview_footer">12km/L · 40L (기본값) · 오후 3:20 갱신</string>
     <!-- 위젯 구성 화면 -->
-    <string name="widget_config_title">위젯 위치 선택</string>
-    <string name="widget_config_description">이 위젯에서 어느 위치 근처의 이득 1위 주유소를 볼지 골라 주세요. 위젯에는 주소 대신 \"집 근처\", \"회사 근처\"로만 표시해요</string>
-    <string name="widget_config_home">집 근처</string>
-    <string name="widget_config_work">회사 근처</string>
-    <string name="widget_config_registered">등록됨</string>
-    <string name="widget_config_not_registered">아직 등록하지 않았어요. 고르면 위젯에서 등록 화면을 열 수 있어요</string>
-    <string name="widget_config_cancel">취소</string>
 </resources>

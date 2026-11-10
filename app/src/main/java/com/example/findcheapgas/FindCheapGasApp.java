@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.findcheapgas.data.local.ThemePreferences;
 import com.example.findcheapgas.util.KeyHashUtil;
-import com.example.findcheapgas.widget.WidgetSettingsWatcher;
 import com.kakao.vectormap.KakaoMapSdk;
 
 public class FindCheapGasApp extends Application {
@@ -35,9 +34,6 @@ public class FindCheapGasApp extends Application {
             mapAvailable = false;
             Log.e(TAG, "카카오맵 SDK 초기화 실패. 지도를 사용할 수 없습니다.", t);
         }
-
-        // 내 차 정보, 내 브랜드, 유종·반경·필터, 집·회사 위치가 바뀌면 홈 화면 위젯을 다시 그린다.
-        WidgetSettingsWatcher.start(this);
 
         // 카카오 디벨로퍼스에 등록할 키 해시. 디버그 빌드에서만 출력한다.
         if (BuildConfig.DEBUG) {
