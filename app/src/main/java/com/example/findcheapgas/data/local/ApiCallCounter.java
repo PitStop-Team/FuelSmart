@@ -15,7 +15,7 @@ import java.util.function.Supplier;
  */
 public class ApiCallCounter {
 
-    public static final int DAILY_LIMIT = 300;
+    public static final int DAILY_LIMIT = DailyLimitReachedException.DAILY_LIMIT;
 
     private static final String PREFS_NAME = "api_usage";
     private static final String KEY_DATE = "opinet_date";

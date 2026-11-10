@@ -22,5 +22,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FindCheapGas"
+include(":domain")
 include(":app")
  

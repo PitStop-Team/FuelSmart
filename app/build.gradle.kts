@@ -108,6 +108,7 @@ dependencies {
     implementation(libs.room.runtime)
     annotationProcessor(libs.room.compiler)
     implementation(libs.play.services.location)
+    implementation(project(":domain"))
     implementation(libs.proj4j)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
