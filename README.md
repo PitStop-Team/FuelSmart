@@ -129,7 +129,11 @@
 
 ## APK
 
-저장소에 APK는 포함하지 않는다. `./gradlew assembleRelease`로 빌드하면 `app/build/outputs/apk/release/`에 생긴다.
+제출용 release APK는 [apk/magmabox_RouteFuel_release.apk](apk/magmabox_RouteFuel_release.apk)에 있다 (패키지 `com.pitstop.routefuel`, minSdk 28, APK Signature Scheme v2 서명).
+
+- release 빌드에는 API 키를 넣지 않고 `USE_MOCK_DATA=true`로 고정한다. 앱에 들어 있는 모의 데이터(강남역 주변)로 동작한다.
+- 직접 빌드하려면 루트에 `keystore.properties`(`storeFile`, `storePassword`, `keyAlias`, `keyPassword`)와 keystore 파일을 두고 `./gradlew assembleRelease`를 실행한다. 두 파일은 커밋하지 않는다. 없으면 서명 없이 빌드된다.
+- 산출물: `app/build/outputs/apk/release/app-release.apk`
 
 ## 데이터 출처
 

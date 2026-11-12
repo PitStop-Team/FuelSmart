@@ -15,6 +15,15 @@ val localProperties = Properties().apply {
 fun localProperty(name: String, defaultValue: String = ""): String =
     localProperties.getProperty(name)?.trim() ?: defaultValue
 
+// 서명 정보는 keystore.properties(커밋하지 않는 파일)에서 읽는다. 없으면 release APK는 서명하지 않고 빌드한다.
+// 항목: storeFile(프로젝트 루트 기준), storePassword, keyAlias, keyPassword
+val keystoreProperties = Properties().apply {
+    val file = rootProject.file("keystore.properties")
+    if (file.exists()) {
+        file.inputStream().use { load(it) }
+    }
+}
+
 fun quoted(value: String): String =
     "\"" + value.replace("\\", "\\\\").replace("\"", "\\\"") + "\""
 
@@ -54,8 +63,24 @@ android {
         buildConfig = true
     }
 
+    signingConfigs {
+        if (keystoreProperties.containsKey("storeFile")) {
+            create("release") {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            // 제출용 APK에는 API 키를 넣지 않고 모의 데이터로 동작하게 한다 (local.properties 값과 상관없이).
+            buildConfigField("String", "OPINET_API_KEY", "\"\"")
+            buildConfigField("String", "KAKAO_REST_API_KEY", "\"\"")
+            buildConfigField("boolean", "USE_MOCK_DATA", "true")
+            signingConfigs.findByName("release")?.let { signingConfig = it }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

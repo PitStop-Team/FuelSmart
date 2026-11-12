@@ -25,6 +25,8 @@ build/
 .externalNativeBuild
 .cxx
 *.apk
+# 제출용 release APK는 apk/ 폴더에 둔다
+!apk/*.apk
 *.aab
 *.ap_
 *.dex
