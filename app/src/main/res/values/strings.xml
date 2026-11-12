@@ -407,4 +407,8 @@
     <string name="waypoint_added">경유지로 추가했어요</string>
     <string name="waypoint_failed">내비게이션에 요청하지 못했어요. 목적지를 정해 안내 중일 때만 추가할 수 있어요</string>
     <string name="basis_vehicle_suffix">%1$s (차량 연비)</string>
+    <!-- 연료 부족 자동 제안 -->
+    <string name="low_fuel_later">나중에</string>
+    <string name="route_requested">내비게이션에 안내를 요청했어요</string>
+    <string name="route_request_failed">내비게이션에 요청하지 못했어요</string>
 </resources>

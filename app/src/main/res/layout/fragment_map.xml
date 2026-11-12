@@ -149,6 +149,52 @@
         android:orientation="vertical"
         android:paddingTop="@dimen/space_m">
 
+        <!--
+            연료 부족 자동 제안. 다른 화면을 덮지 않고 이득 1위 카드 자리 위에 한 장으로 보여준다.
+            주행 중에는 이 카드와 큰 버튼 두 개만 남기고 나머지는 숨긴다 (코드에서).
+        -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/low_fuel_card"
+            style="@style/Widget.FindCheapGas.Card.Hero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_l"
+            android:layout_marginEnd="@dimen/space_l"
+            android:layout_marginBottom="@dimen/space_m"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/card_padding">
+
+                <TextView
+                    android:id="@+id/low_fuel_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?attr/textAppearanceTitleLarge" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/low_fuel_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_l"
+                    android:minHeight="80dp"
+                    android:textSize="24sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/low_fuel_later"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_s"
+                    android:minHeight="80dp"
+                    android:text="@string/low_fuel_later"
+                    android:textSize="24sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/best_card"
             style="@style/Widget.FindCheapGas.Card.Hero"

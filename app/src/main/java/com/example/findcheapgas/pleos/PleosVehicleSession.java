@@ -18,6 +18,7 @@ import ai.pleos.playground.vehicle.listener.BrakePedalStatusListener;
 import ai.pleos.playground.vehicle.listener.FuelEconomyListener;
 import ai.pleos.playground.vehicle.listener.FuelPercentListener;
 
+import com.example.findcheapgas.BuildConfig;
 import com.example.findcheapgas.vehicle.CachedVehicleDataSource;
 import com.example.findcheapgas.vehicle.DrivingState;
 import com.example.findcheapgas.vehicle.DrivingStateTracker;
@@ -56,6 +57,8 @@ public final class PleosVehicleSession {
     private final MutableLiveData<Long> fuelDataVersion = new MutableLiveData<>(0L);
 
     private Vehicle vehicle;
+    // 디버그 빌드 전용: 연료 %를 직접 정해 연료 부족 제안을 시험한다. 값이 있으면 차량이 준 연료 %는 무시한다.
+    private volatile Integer debugFuelPercent;
     private boolean started = false;
 
     private final Runnable stateTick = new Runnable() {
@@ -121,15 +124,13 @@ public final class PleosVehicleSession {
         fuel.checkFuelPercentCapabilities(config -> {
             if (isReadable(config)) {
                 fuel.getFuelPercent(percent -> {
-                    dataSource.setFuelPercent(percent);
-                    notifyFuelChanged();
+                    onVehicleFuelPercent(percent);
                     return Unit.INSTANCE;
                 }, e -> failed("연료 잔량 읽기", e));
                 fuel.registerFuelPercent(new FuelPercentListener() {
                     @Override
                     public void onFuelPercentUpdated(Integer percent) {
-                        dataSource.setFuelPercent(percent);
-                        notifyFuelChanged();
+                        onVehicleFuelPercent(percent);
                     }
 
                     @Override
@@ -167,6 +168,30 @@ public final class PleosVehicleSession {
             }
             return Unit.INSTANCE;
         }, e -> failed("현재 연비 capability", e));
+    }
+
+    private void onVehicleFuelPercent(Integer percent) {
+        if (debugFuelPercent != null) {
+            return;
+        }
+        dataSource.setFuelPercent(percent);
+        notifyFuelChanged();
+    }
+
+    /**
+     * 디버그 빌드 전용 연료 % 지정 (null이면 지정을 푼다). 릴리스 빌드에서는 아무 일도 하지 않는다.
+     */
+    public void setDebugFuelPercent(Integer percent) {
+        if (!BuildConfig.DEBUG) {
+            return;
+        }
+        debugFuelPercent = percent;
+        dataSource.setFuelPercent(percent);
+        notifyFuelChanged();
+    }
+
+    public Integer getDebugFuelPercent() {
+        return BuildConfig.DEBUG ? debugFuelPercent : null;
     }
 
     private void notifyFuelChanged() {

@@ -32,6 +32,10 @@ import com.example.findcheapgas.model.StationSaving;
 import com.example.findcheapgas.navigation.RoadDistanceResolver;
 import com.example.findcheapgas.pleos.PleosVehicleSession;
 import com.example.findcheapgas.vehicle.CarInfoResolver;
+import com.example.findcheapgas.vehicle.LowFuelSuggestion;
+import com.example.findcheapgas.vehicle.LowFuelTrigger;
+import com.example.findcheapgas.pleos.NaviHelperNavigationController;
+import java.util.OptionalInt;
 import com.example.findcheapgas.navigation.RouteDistanceProvider;
 import com.example.findcheapgas.navigation.UserInputRouteDistanceProvider;
 import com.example.findcheapgas.model.StationSearchResult;
@@ -72,7 +76,15 @@ public class MapViewModel extends AndroidViewModel {
     // 내 차 정보가 바뀌면 받아 둔 목록으로 다시 계산한다. ViewModel이 없어질 때 해제한다.
     private final Observer<CarInfo> carInfoObserver = carInfo -> updateDisplayedStations();
     // 차량에서 연비를 새로 받으면 목록을 다시 계산한다.
-    private final Observer<Long> vehicleObserver = version -> updateDisplayedStations();
+    private final Observer<Long> vehicleObserver = version -> {
+        onVehicleFuelChanged();
+        updateDisplayedStations();
+    };
+    // 연료 부족 자동 제안: 한 번 내면 연료가 회복될 때까지 다시 내지 않는다 (LowFuelTrigger).
+    private final LowFuelTrigger lowFuelTrigger = new LowFuelTrigger();
+    private boolean lowFuelPending = false;
+    private int lowFuelPercent;
+    private final MutableLiveData<LowFuelSuggestion> lowFuelSuggestion = new MutableLiveData<>();
     private final PleosVehicleSession vehicleSession;
     // 내 브랜드 설정(할인, 선호, 숨기기)이 바뀌어도 같은 방식으로 다시 계산한다.
     private final BrandSettingsRepository brandSettingsRepository;
@@ -161,6 +173,46 @@ public class MapViewModel extends AndroidViewModel {
         vehicleSession.getFuelDataVersion().observeForever(vehicleObserver);
         brandSettingsRepository = BrandSettingsRepository.getInstance(application);
         brandSettingsRepository.getBrandSettings().observeForever(brandSettingsObserver);
+    }
+
+    /** 지금 보여줄 연료 부족 제안. 없으면 null */
+    public LiveData<LowFuelSuggestion> getLowFuelSuggestion() {
+        return lowFuelSuggestion;
+    }
+
+    /** 운전자가 "나중에"를 눌렀거나 제안을 처리했다. 같은 연료 하락 구간에서는 다시 제안하지 않는다. */
+    public void dismissLowFuelSuggestion() {
+        lowFuelPending = false;
+        lowFuelSuggestion.setValue(null);
+    }
+
+    private void onVehicleFuelChanged() {
+        OptionalInt percent = vehicleSession.getDataSource().getFuelPercent();
+        if (percent.isPresent()) {
+            lowFuelPercent = percent.getAsInt();
+        }
+        if (lowFuelTrigger.onFuelPercent(percent)) {
+            lowFuelPending = true;
+        }
+        emitLowFuelSuggestionIfReady();
+    }
+
+    /** 제안할 때가 됐고 주변 주유소 목록이 준비됐으면 제안을 내보낸다. 목록이 아직 없으면 기다린다. */
+    private void emitLowFuelSuggestionIfReady() {
+        if (!lowFuelPending) {
+            return;
+        }
+        List<StationSaving> list = stations.getValue();
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        boolean hasRoute = NaviHelperNavigationController.getInstance(getApplication())
+                .getCurrentRouteInfo().isPresent();
+        java.util.Optional<LowFuelSuggestion> suggestion = LowFuelSuggestion.create(lowFuelPercent, list, hasRoute);
+        if (suggestion.isPresent()) {
+            lowFuelPending = false;
+            lowFuelSuggestion.setValue(suggestion.get());
+        }
     }
 
     /** 계산에 실제로 쓰는 내 차 정보: 차량 연비가 있으면 그 값, 없으면 사용자 입력값 */
@@ -654,6 +706,7 @@ public class MapViewModel extends AndroidViewModel {
                         brandFilter.getValue())
                 : StationListBuilder.EmptyReason.NONE);
         stations.setValue(result);
+        emitLowFuelSuggestionIfReady();
         aroundStations.setValue(new AroundStations(fetchedOrigin, fetchedFuelType, fetchedStations, result));
     }
 

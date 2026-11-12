@@ -86,3 +86,14 @@ FindCheapGas(폰 앱)를 Pleos Connect 차량용 앱으로 개조하기 위한 1
 - 내비: `requestRoute`, `addWaypoint`, `removeWaypoint`, `getCurrentLocationInfo`, `getRouteStateInfo`, `getDestinationInfo`, `getWaypointInfo`
 - 음성(TextToSpeech, SpeechToText), FusedLocation: SDK 신청 안내에 "준비 중"으로 표시되어 구현하지 않았다.
 - Client ID/Secret은 TextToSpeech, SpeechToText에만 필요하다고 문서에 적혀 있어 이번 구현에서는 쓰지 않는다.
+
+## 7. 연료 부족 자동 제안
+
+- 기준: 연료 잔량(%) 25% 미만에서 제안, 35% 이상으로 회복하면 재무장 (`LowFuelTrigger.SUGGEST_BELOW_PERCENT`, `REARM_AT_PERCENT`). 정확히 25%는 제안하지 않는다.
+- 연료통 용량을 모르므로 리터로 바꾸지 않고 %로만 판단한다.
+- 한 번 제안하면 회복 전까지 다시 제안하지 않는다. "나중에"를 눌러도 같은 하락 구간에서는 다시 묻지 않는다. 앱을 다시 시작하면 상태가 초기화된다.
+- 연료 값이 없거나 capability가 미지원이면 값이 비어 있으므로 제안은 일어나지 않는다. 사용자 입력 연비 경로와는 무관하다.
+- 후보: 화면 목록의 예상 이득 1위 1곳 (기존 예상 총비용 계산 재사용). 경유 모드(경로 위 주유소만 비교)는 아직 없어 주변 목록에서만 고른다.
+- 승인: 안내 중인 경로가 있으면 "경유지로 추가"(경유지 승인 화면을 거침), 없으면 "여기로 안내"(`requestRoute`). 이 버튼 누름이 승인이며, 승인 없이 경로를 바꾸지 않는다.
+- 화면: 주행 중에는 제안 카드와 큰 버튼 두 개만, 정차 중에는 목록 위 맨 위 카드로 보인다. 다른 화면을 덮지 않는다.
+- 시연: 디버그 빌드의 설정 탭 맨 아래에서 연료 %를 정할 수 있다(`PleosVehicleSession.setDebugFuelPercent`). 릴리스 빌드에서는 화면이 만들어지지 않고 호출해도 아무 일도 하지 않는다.

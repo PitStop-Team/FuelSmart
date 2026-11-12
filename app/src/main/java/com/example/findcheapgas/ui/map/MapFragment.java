@@ -56,6 +56,7 @@ import com.example.findcheapgas.util.FormatUtil;
 import com.example.findcheapgas.util.PlaceCompareBuilder;
 import com.example.findcheapgas.util.StationListBuilder;
 import com.example.findcheapgas.vehicle.DrivingState;
+import com.example.findcheapgas.vehicle.LowFuelSuggestion;
 import com.example.findcheapgas.viewmodel.MapViewModel;
 import com.example.findcheapgas.viewmodel.SearchViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -116,6 +117,12 @@ public class MapFragment extends Fragment {
     private View waypointButton;
     private View drivingButton;
     private DrivingState drivingState = DrivingState.UNKNOWN;
+    // 연료 부족 자동 제안 카드
+    private View lowFuelCard;
+    private TextView lowFuelMessage;
+    private MaterialButton lowFuelAction;
+    @Nullable
+    private LowFuelSuggestion lowFuelSuggestion;
     private RecyclerView stationList;
     private LinearLayoutManager stationLayoutManager;
     private StationAdapter stationAdapter;
@@ -208,6 +215,7 @@ public class MapFragment extends Fragment {
                 version -> renderCalculationBasis(viewModel.getCarInfo().getValue()));
         PleosVehicleSession.getInstance(requireContext()).getDrivingState().observe(getViewLifecycleOwner(),
                 this::applyDrivingState);
+        viewModel.getLowFuelSuggestion().observe(getViewLifecycleOwner(), this::showLowFuelSuggestion);
 
         viewModel.getStations().observe(getViewLifecycleOwner(), this::showStations);
         viewModel.getStationsLoading().observe(getViewLifecycleOwner(), loading -> {
@@ -261,6 +269,9 @@ public class MapFragment extends Fragment {
         listCard = null;
         waypointButton = null;
         drivingButton = null;
+        lowFuelCard = null;
+        lowFuelMessage = null;
+        lowFuelAction = null;
         cardStation = null;
         cardStatusAction = null;
     }
@@ -511,6 +522,12 @@ public class MapFragment extends Fragment {
         topBar = view.findViewById(R.id.map_top_bar);
         listHeader = view.findViewById(R.id.station_list_header);
         listCard = view.findViewById(R.id.station_list_card);
+
+        lowFuelCard = view.findViewById(R.id.low_fuel_card);
+        lowFuelMessage = view.findViewById(R.id.low_fuel_message);
+        lowFuelAction = view.findViewById(R.id.low_fuel_action);
+        lowFuelAction.setOnClickListener(v -> onLowFuelAction());
+        view.findViewById(R.id.low_fuel_later).setOnClickListener(v -> viewModel.dismissLowFuelSuggestion());
     }
 
     /**
@@ -522,23 +539,70 @@ public class MapFragment extends Fragment {
             return;
         }
         drivingState = state;
-        int detailVisibility = state == DrivingState.DRIVING ? View.GONE : View.VISIBLE;
+        applyLayout();
+    }
+
+    private void updateActionButtons() {
+        applyLayout();
+    }
+
+    /**
+     * 주행 상태, 연료 부족 제안, 내비게이션 연결 여부에 맞춰 화면 요소를 보이거나 숨긴다.
+     * - 주행 중: 검색, 필터, 목록을 숨긴다. 제안이 있으면 제안 카드(큰 버튼 두 개)만, 없으면 이득 1위 카드와 큰 버튼 하나.
+     * - 정차 중, 차량 데이터 없음: 모두 보인다. 제안은 맨 위 카드로 보인다.
+     * 경유지 버튼은 보여줄 주유소가 있고 내비게이션에 연결돼 있을 때만 보인다.
+     */
+    private void applyLayout() {
+        if (topBar == null || waypointButton == null || drivingButton == null) {
+            return;
+        }
+        boolean driving = drivingState == DrivingState.DRIVING;
+        boolean hasSuggestion = lowFuelSuggestion != null;
+        boolean connected = NaviHelperNavigationController.getInstance(requireContext()).isConnected();
+
+        int detailVisibility = driving ? View.GONE : View.VISIBLE;
         topBar.setVisibility(detailVisibility);
         listHeader.setVisibility(detailVisibility);
         listCard.setVisibility(detailVisibility);
-        updateActionButtons();
+
+        lowFuelCard.setVisibility(hasSuggestion ? View.VISIBLE : View.GONE);
+        lowFuelAction.setVisibility(connected ? View.VISIBLE : View.GONE);
+        bestCard.setVisibility(driving && hasSuggestion ? View.GONE : View.VISIBLE);
+
+        boolean canAct = cardStation != null && connected;
+        waypointButton.setVisibility(canAct && !driving ? View.VISIBLE : View.GONE);
+        drivingButton.setVisibility(canAct && driving && !hasSuggestion ? View.VISIBLE : View.GONE);
     }
 
-    /** 경유지 버튼은 보여줄 주유소가 있고 내비게이션에 연결돼 있을 때만 보인다. */
-    private void updateActionButtons() {
-        if (waypointButton == null || drivingButton == null) {
+    private void showLowFuelSuggestion(@Nullable LowFuelSuggestion suggestion) {
+        lowFuelSuggestion = suggestion;
+        if (suggestion != null && lowFuelMessage != null) {
+            lowFuelMessage.setText(suggestion.message());
+            lowFuelAction.setText(suggestion.actionLabel());
+        }
+        applyLayout();
+    }
+
+    /**
+     * 제안을 승인했다. 안내 중인 경로가 있으면 경유지 승인 화면을 거치고, 없으면 이 버튼이 승인이라
+     * 그 주유소로 안내를 요청한다. 어느 쪽이든 이 제안은 여기서 끝난다.
+     */
+    private void onLowFuelAction() {
+        LowFuelSuggestion suggestion = lowFuelSuggestion;
+        if (suggestion == null) {
             return;
         }
-        boolean canAct = cardStation != null
-                && NaviHelperNavigationController.getInstance(requireContext()).isConnected();
-        boolean driving = drivingState == DrivingState.DRIVING;
-        waypointButton.setVisibility(canAct && !driving ? View.VISIBLE : View.GONE);
-        drivingButton.setVisibility(canAct && driving ? View.VISIBLE : View.GONE);
+        viewModel.dismissLowFuelSuggestion();
+        NaviHelperNavigationController nav = NaviHelperNavigationController.getInstance(requireContext());
+        GasStation station = suggestion.getSaving().getStation();
+        if (nav.getCurrentRouteInfo().isPresent()) {
+            startWaypointApproval(suggestion.getSaving());
+        } else {
+            boolean sent = nav.setDestination(
+                    new NavPoint(station.getName(), station.getLatitude(), station.getLongitude()));
+            Toast.makeText(requireContext(), sent ? R.string.route_requested : R.string.route_request_failed,
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -546,7 +610,10 @@ public class MapFragment extends Fragment {
      * 닫거나 취소하면 아무것도 보내지 않는다.
      */
     private void startWaypointApproval() {
-        StationSaving saving = cardStation;
+        startWaypointApproval(cardStation);
+    }
+
+    private void startWaypointApproval(@Nullable StationSaving saving) {
         if (saving == null) {
             return;
         }

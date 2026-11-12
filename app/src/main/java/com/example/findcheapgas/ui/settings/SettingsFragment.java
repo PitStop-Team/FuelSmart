@@ -74,6 +74,11 @@ public class SettingsFragment extends Fragment {
         // 지도 탭과 같은 MapViewModel (MainActivity 범위)
         mapViewModel = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
 
+        // 디버그 빌드에서만: 연료 %를 바꿔 연료 부족 제안을 시험하는 줄을 만든다. 릴리스 빌드에서는 만들지 않는다.
+        if (com.example.findcheapgas.BuildConfig.DEBUG) {
+            addDebugFuelSection(view);
+        }
+
         carInfoRow = new SettingsRow(view.findViewById(R.id.settings_car_info_row), R.string.settings_car_info);
         carInfoStatus = view.findViewById(R.id.settings_car_info_status);
         resetButton = view.findViewById(R.id.settings_car_info_reset);
@@ -235,5 +240,44 @@ public class SettingsFragment extends Fragment {
             value.setText(text);
             root.setContentDescription(getString(R.string.settings_row_description, title, text));
         }
+    }
+
+    /** 디버그 전용. 문구는 코드에 직접 적고 리소스에 넣지 않는다. */
+    private void addDebugFuelSection(@NonNull View root) {
+        if (!(root instanceof android.view.ViewGroup)) {
+            return;
+        }
+        View content = ((android.view.ViewGroup) root).getChildAt(0);
+        if (!(content instanceof android.view.ViewGroup)) {
+            return;
+        }
+        android.content.Context context = requireContext();
+        com.example.findcheapgas.pleos.PleosVehicleSession session =
+                com.example.findcheapgas.pleos.PleosVehicleSession.getInstance(context);
+
+        TextView title = new TextView(context);
+        title.setText("디버그: 연료 % 시뮬레이션");
+        title.setPadding(0, 48, 0, 8);
+        title.setTextAppearance(com.google.android.material.R.style.TextAppearance_Material3_TitleMedium);
+        TextView status = new TextView(context);
+        status.setText("기준 25% 미만에서 제안, 35% 이상에서 재무장. 해제하면 차량 값을 따른다.");
+
+        android.widget.LinearLayout row = new android.widget.LinearLayout(context);
+        row.setOrientation(android.widget.LinearLayout.HORIZONTAL);
+        int[] values = {-1, 80, 40, 24, 10};
+        for (int value : values) {
+            com.google.android.material.button.MaterialButton button =
+                    new com.google.android.material.button.MaterialButton(context, null,
+                            com.google.android.material.R.attr.materialButtonOutlinedStyle);
+            button.setText(value < 0 ? "해제" : value + "%");
+            button.setOnClickListener(v -> session.setDebugFuelPercent(value < 0 ? null : value));
+            android.widget.LinearLayout.LayoutParams lp = new android.widget.LinearLayout.LayoutParams(
+                    0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+            row.addView(button, lp);
+        }
+        android.view.ViewGroup list = (android.view.ViewGroup) content;
+        list.addView(title);
+        list.addView(status);
+        list.addView(row);
     }
 }
