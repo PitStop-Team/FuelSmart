@@ -127,6 +127,24 @@
 ./gradlew assembleDebug       # 디버그 빌드
 ```
 
+## 테스트 환경 (Pleos Connect 에뮬레이터)
+
+개발과 동작 확인에 사용한 에뮬레이터와 화면 규격이다.
+
+| 항목 | 값 |
+|---|---|
+| 에뮬레이터 | Pleos Connect Emulator v2.1.0 (AVD: `Pleos Connect v2.1.0 API 34`) |
+| 시스템 이미지 | Pleos Connect v2.1.0 APIs, Android Automotive, API 34, x86_64 |
+| 기기 프로필 | `Pleos_Connect_v2_0` |
+| 화면 해상도 | 2560 × 1440 (가로) |
+| 화면 밀도 | 160 dpi (mdpi) |
+| Android Emulator | 37.1.11 |
+
+에뮬레이터 설치와 AVD 생성은 [Pleos Connect Emulator 설치 및 실행](https://document.pleos.ai/docs/connect/guide/getting-started/application-development/setup-connect-sdk-emulator) 문서를 따른다. 공식 문서의 권장 설정은 Cold boot, RAM 4 GB다.
+
+- Pleos Connect는 Driving view 옆의 앱 영역에 앱을 띄우므로, 앱이 실제로 쓰는 영역은 위 해상도보다 작다.
+- Android Automotive는 화면을 쓰는 사용자(보통 10번)와 시스템 사용자(0번)가 나뉜다. 부팅이 끝나기 전에 설치하면 앱이 0번 사용자에게만 설치되어 앱 목록에 보이지 않고 실행 시 `Activity class ... does not exist`가 난다. 차량 홈 화면이 뜬 뒤에 설치하고, Android Studio 실행 설정의 Install Flags에 `--user current`를 넣으면 이 문제를 피할 수 있다. 이미 설치된 경우에는 `adb shell pm install-existing --user 10 com.pitstop.routefuel`로 해결된다.
+
 ## APK
 
 제출용 release APK는 [apk/magmabox_RouteFuel_release.apk](apk/magmabox_RouteFuel_release.apk)에 있다 (패키지 `com.pitstop.routefuel`, minSdk 28, APK Signature Scheme v2 서명).
